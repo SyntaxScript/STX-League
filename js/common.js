@@ -12,15 +12,31 @@
 
     // ===== Конфиг навигации =====
     var NAV_LINKS = [
-        { href: 'about.html',    label: 'О турнире' },
-        { href: 'format.html',   label: 'Формат' },
-        { href: 'prizes.html',   label: 'Призы' },
-        { href: 'schedule.html', label: 'Расписание' },
-        { href: 'teams.html',    label: 'Команды' },
-        { href: 'rules.html',    label: 'Правила' },
-        { href: 'faq.html',      label: 'FAQ' },
-        { href: 'partners.html', label: 'Партнёры' }
+        { href: 'about.html',    key: 'nav.about' },
+        { href: 'format.html',   key: 'nav.format' },
+        { href: 'prizes.html',   key: 'nav.prizes' },
+        { href: 'schedule.html', key: 'nav.schedule' },
+        { href: 'teams.html',    key: 'nav.teams' },
+        { href: 'rules.html',    key: 'nav.rules' },
+        { href: 'faq.html',      key: 'nav.faq' },
+        { href: 'partners.html', key: 'nav.partners' }
     ];
+
+    function t(k, fb) {
+        return (window.I18N && window.I18N.t) ? window.I18N.t(k, fb) : (fb || k);
+    }
+
+    function langSwitcherHtml() {
+        var cur = (window.I18N && window.I18N.lang) || 'ru';
+        return '<div class="lang-switch">' +
+            '<button class="lang-btn ' + (cur === 'ru' ? 'active' : '') + '" data-lang="ru" title="Русский">' +
+                '🇷🇺 <span class="lang-code">RU</span>' +
+            '</button>' +
+            '<button class="lang-btn ' + (cur === 'ro' ? 'active' : '') + '" data-lang="ro" title="Română">' +
+                '🇷🇴 <span class="lang-code">RO</span>' +
+            '</button>' +
+        '</div>';
+    }
 
     var DISCORD_ICON = '<svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>';
 
@@ -51,7 +67,7 @@
 
         var linksHtml = NAV_LINKS.map(function(l) {
             var act = (l.href === current) ? ' class="act"' : '';
-            return '<a href="' + l.href + '"' + act + '>' + l.label + '</a>';
+            return '<a href="' + l.href + '"' + act + ' data-i18n="' + l.key + '">' + t(l.key, '') + '</a>';
         }).join('');
 
         navHost.outerHTML =
@@ -59,7 +75,8 @@
                 '<a href="index.html" class="nlogo">STX LEAGUE</a>' +
                 '<div class="nlinks" id="nlinks">' + linksHtml + '</div>' +
                 '<div class="nright">' +
-                    '<button class="btn-discord" id="dBtn">' + DISCORD_ICON + ' Войти через Discord</button>' +
+                    langSwitcherHtml() +
+                    '<button class="btn-discord" id="dBtn">' + DISCORD_ICON + ' <span data-i18n="nav.login">' + t('nav.login') + '</span></button>' +
                     '<div class="user-dropdown-wrap" id="userDropdownWrap">' +
                         '<button class="user-btn" id="userBtn">' +
                             '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>' +
@@ -69,30 +86,48 @@
                         '<div class="user-dropdown" id="userDropdown">' +
                             '<div class="user-dropdown-info">' +
                                 '<div class="uname" id="dropdownUname">Player</div>' +
-                                '<div class="ustatus">В сети</div>' +
+                                '<div class="ustatus" data-i18n="nav.online">' + t('nav.online') + '</div>' +
                             '</div>' +
                             '<a class="user-dropdown-item" id="adminLink" href="admin.html" style="display:none;color:var(--ac2)">' +
                                 '<svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>' +
-                                'Админ-панель' +
+                                '<span data-i18n="nav.admin">' + t('nav.admin') + '</span>' +
                             '</a>' +
                             '<button class="user-dropdown-item" id="logoutBtn">' +
-                                '<svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg> Выйти' +
+                                '<svg viewBox="0 0 24 24"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg> ' +
+                                '<span data-i18n="nav.logout">' + t('nav.logout') + '</span>' +
                             '</button>' +
                         '</div>' +
                     '</div>' +
-                    '<a href="register.html" class="btn-reg" id="rBtn">Регистрация</a>' +
+                    '<a href="register.html" class="btn-reg" id="rBtn" data-i18n="nav.register">' + t('nav.register') + '</a>' +
                 '</div>' +
-                '<button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>' +
+                '<button class="burger" id="burger" data-i18n-aria-label="common.menu" aria-label="' + t('common.menu') + '"><span></span><span></span><span></span></button>' +
             '</nav>' +
             '<div class="mmenu" id="mmenu">' +
-                NAV_LINKS.map(function(l) { return '<a href="' + l.href + '">' + l.label + '</a>'; }).join('') +
-                '<button class="btn-discord" id="dBtnMobile">' + DISCORD_ICON + ' Войти через Discord</button>' +
+                NAV_LINKS.map(function(l) { return '<a href="' + l.href + '" data-i18n="' + l.key + '">' + t(l.key) + '</a>'; }).join('') +
+                '<button class="btn-discord" id="dBtnMobile">' + DISCORD_ICON + ' <span data-i18n="nav.login">' + t('nav.login') + '</span></button>' +
+                langSwitcherHtml() +
                 '<div class="mmenu-user" id="mmenuUser">' +
                     '<div class="muname" id="mmenuUname">Player</div>' +
-                    '<a class="btn-logout-mobile" id="adminLinkMobile" href="admin.html" style="display:none;background:rgba(124,58,237,.15);color:var(--ac2);border-color:rgba(124,58,237,.3);margin-bottom:6px">Админ-панель</a>' +
-                    '<button class="btn-logout-mobile" id="logoutBtnMobile">Выйти</button>' +
+                    '<a class="btn-logout-mobile" id="adminLinkMobile" href="admin.html" style="display:none;background:rgba(124,58,237,.15);color:var(--ac2);border-color:rgba(124,58,237,.3);margin-bottom:6px" data-i18n="nav.admin">' + t('nav.admin') + '</a>' +
+                    '<button class="btn-logout-mobile" id="logoutBtnMobile" data-i18n="nav.logout">' + t('nav.logout') + '</button>' +
                 '</div>' +
             '</div>';
+    }
+
+    function bindLangSwitch() {
+        document.querySelectorAll('.lang-btn').forEach(function(btn) {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var lang = btn.getAttribute('data-lang');
+                if (!lang || !window.I18N) return;
+                window.I18N.setLang(lang);
+                // обновить активный класс
+                document.querySelectorAll('.lang-btn').forEach(function(b) {
+                    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+                });
+            });
+        });
     }
 
     // ===== FOOTER =====
@@ -107,16 +142,16 @@
                     '<a href="https://discord.gg/stxleague" target="_blank" rel="noopener" title="Discord">' + DISCORD_ICON + '</a>' +
                     '<a href="https://tiktok.com/@stxleague" target="_blank" rel="noopener" title="TikTok"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>' +
                 '</div>' +
-                '<div class="contact">stxleague@gmail.com &nbsp;|&nbsp; @stxleague</div>' +
-                '<div class="copy">&copy; 2026 Syntax League. Все права защищены.</div>' +
+                '<div class="contact" data-i18n="foot.contact">' + t('foot.contact') + '</div>' +
+                '<div class="copy" data-i18n="foot.copy">' + t('foot.copy') + '</div>' +
             '</footer>' +
-            '<button class="snd" id="sndBtn" title="Звук">🔊</button>' +
-            '<button class="btt" id="btt" title="Наверх">&uarr;</button>' +
+            '<button class="snd" id="sndBtn" data-i18n-title="common.sound" title="' + t('common.sound') + '">🔊</button>' +
+            '<button class="btt" id="btt" data-i18n-title="common.btt" title="' + t('common.btt') + '">&uarr;</button>' +
             '<div class="egg" id="egg">' +
                 '<div class="egg-box">' +
                     '<h2>🏆 GOD MODE 🏆</h2>' +
-                    '<p>Ты нашёл секретный код! Твоя команда автоматически в финале. Шутка 😄<br>Удачи на турнире, легенда!</p>' +
-                    '<button class="egg-close" id="eggClose">Закрыть</button>' +
+                    '<p data-i18n="egg.text">' + t('egg.text') + '</p>' +
+                    '<button class="egg-close" id="eggClose" data-i18n="egg.close">' + t('egg.close') + '</button>' +
                 '</div>' +
             '</div>';
     }
@@ -275,6 +310,33 @@
         if (egg) egg.addEventListener('click', function(e) { if (e.target === egg) egg.classList.remove('on'); });
     }
 
+    // ===== Применить статус регистрации (открыта/закрыта) =====
+    function applyRegistrationStatus() {
+        var cfg = window.STX_CONFIG || {};
+        if (cfg.REGISTRATION_OPEN !== false) return; // открыта — ничего не меняем
+
+        var heroRegBtn = document.querySelector('.hero-btns a[href="register.html"]');
+        if (heroRegBtn && !heroRegBtn.dataset.regClosed) {
+            heroRegBtn.dataset.regClosed = '1';
+            heroRegBtn.setAttribute('data-i18n', 'hero.btn.reg_closed');
+            heroRegBtn.textContent = t('hero.btn.reg_closed');
+            heroRegBtn.style.opacity = '0.7';
+            heroRegBtn.style.cursor = 'not-allowed';
+            heroRegBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert(t('reg.closed.title') + '\n\n' + t('reg.closed.hint'));
+            });
+        }
+
+        // Скрыть кнопку "Регистрация" в шапке (.btn-reg) — добавляем CSS
+        if (!document.getElementById('reg-closed-style')) {
+            var style = document.createElement('style');
+            style.id = 'reg-closed-style';
+            style.textContent = '.btn-reg{display:none !important}';
+            document.head.appendChild(style);
+        }
+    }
+
     // ===== INIT =====
     function init() {
         injectPreloader();
@@ -283,6 +345,17 @@
         bindAuthHandlers();
         bindNavInteractions();
         bindExtras();
+        bindLangSwitch();
+
+        // Применить i18n ко всем data-i18n атрибутам (включая только что вставленные шапку/футер)
+        if (window.I18N) window.I18N.applyToDOM();
+        applyRegistrationStatus();
+
+        // При смене языка — переприменить (но НЕ пересоздавать шапку, чтобы не сбрасывать состояние)
+        document.addEventListener('stx:lang', function() {
+            if (window.I18N) window.I18N.applyToDOM();
+            applyRegistrationStatus();
+        });
 
         // Подписка на изменения авторизации
         function tryBindAuth() {

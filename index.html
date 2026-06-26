@@ -21,18 +21,18 @@
     <canvas id="bg"></canvas>
     <div class="hero-overlay"></div>
     <div class="hero-inner">
-        <div class="hero-tag">Киберспортивный турнир • Молдова 2026</div>
+        <div class="hero-tag" data-i18n="hero.tag">Киберспортивный турнир • Молдова 2026</div>
         <h1>STX <span>LEAGUE</span> MD</h1>
         <div class="hero-slogan" id="tw"></div>
         <div class="countdown" id="cd">
-            <div class="cd-item"><div class="cd-num" id="cdD">00</div><div class="cd-lbl">Дней</div></div>
-            <div class="cd-item"><div class="cd-num" id="cdH">00</div><div class="cd-lbl">Часов</div></div>
-            <div class="cd-item"><div class="cd-num" id="cdM">00</div><div class="cd-lbl">Минут</div></div>
-            <div class="cd-item"><div class="cd-num" id="cdS">00</div><div class="cd-lbl">Секунд</div></div>
+            <div class="cd-item"><div class="cd-num" id="cdD">00</div><div class="cd-lbl" data-i18n="hero.cd.days">Дней</div></div>
+            <div class="cd-item"><div class="cd-num" id="cdH">00</div><div class="cd-lbl" data-i18n="hero.cd.hours">Часов</div></div>
+            <div class="cd-item"><div class="cd-num" id="cdM">00</div><div class="cd-lbl" data-i18n="hero.cd.mins">Минут</div></div>
+            <div class="cd-item"><div class="cd-num" id="cdS">00</div><div class="cd-lbl" data-i18n="hero.cd.secs">Секунд</div></div>
         </div>
         <div class="hero-btns">
-            <a href="register.html" class="btn-primary">Зарегистрировать команду</a>
-            <a href="about.html" class="btn-secondary">Подробнее</a>
+            <a href="register.html" class="btn-primary" data-i18n="hero.btn.register">Зарегистрировать команду</a>
+            <a href="about.html" class="btn-secondary" data-i18n="hero.btn.more">Подробнее</a>
         </div>
     </div>
 </section>
@@ -41,6 +41,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/supabase-client.js"></script>
 <script src="js/common.js"></script>
 <script src="js/hero.js"></script>

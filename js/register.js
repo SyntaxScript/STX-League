@@ -22,9 +22,9 @@
         if (rsteps) rsteps.style.display = 'none';
         if (!fc) return;
 
-        var statusText = team.status === 'pending' ? 'на рассмотрении'
-            : team.status === 'approved' ? 'одобрена ✅'
-            : 'отклонена ❌';
+        var statusKey = team.status === 'pending' ? 'reg.exists.s.pending'
+            : team.status === 'approved' ? 'reg.exists.s.approved'
+            : 'reg.exists.s.rejected';
         var statusColor = team.status === 'pending' ? 'var(--gold)'
             : team.status === 'approved' ? 'var(--grn)'
             : 'var(--red)';
@@ -34,12 +34,12 @@
                 '<div class="ok-icon" style="background:rgba(168,85,247,.1)">' +
                     '<svg viewBox="0 0 24 24" width="32" height="32" fill="var(--ac2)"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>' +
                 '</div>' +
-                '<h3 style="color:var(--ac2)">У вас уже есть заявка</h3>' +
-                '<p>Команда: <strong>' + escapeHtml(team.team_name) + '</strong>' +
+                '<h3 data-i18n="reg.exists.title" style="color:var(--ac2)">' + tr('reg.exists.title') + '</h3>' +
+                '<p><span data-i18n="reg.exists.team">' + tr('reg.exists.team') + '</span> <strong>' + escapeHtml(team.team_name) + '</strong>' +
                 (team.team_tag ? ' [' + escapeHtml(team.team_tag) + ']' : '') + '<br>' +
-                'Статус: <strong style="color:' + statusColor + '">' + statusText + '</strong><br>' +
-                (team.rejection_reason ? '<br>Причина отклонения: <em>' + escapeHtml(team.rejection_reason) + '</em><br>' : '') +
-                '<br>С каждого Discord-аккаунта разрешена одна заявка.</p>' +
+                '<span data-i18n="reg.exists.status">' + tr('reg.exists.status') + '</span> <strong style="color:' + statusColor + '" data-i18n="' + statusKey + '">' + tr(statusKey) + '</strong><br>' +
+                (team.rejection_reason ? '<br><span data-i18n="reg.exists.reason">' + tr('reg.exists.reason') + '</span> <em>' + escapeHtml(team.rejection_reason) + '</em><br>' : '') +
+                '<br><span data-i18n="reg.exists.note">' + tr('reg.exists.note') + '</span></p>' +
             '</div>';
     }
 
@@ -116,20 +116,20 @@
 
     function updateReview() {
         var lines = [];
-        lines.push('<strong>Команда:</strong> ' + escapeHtml($('teamName').value.trim()) +
+        lines.push('<strong>' + tr('reg.review.team') + '</strong> ' + escapeHtml($('teamName').value.trim()) +
                    ($('teamTag').value.trim() ? ' [' + escapeHtml($('teamTag').value.trim()) + ']' : ''));
-        lines.push('<strong>Капитан:</strong> ' + escapeHtml($('captainContact').value.trim()));
+        lines.push('<strong>' + tr('reg.review.captain') + '</strong> ' + escapeHtml($('captainContact').value.trim()));
         if (currentUser) {
-            lines.push('<strong>Discord:</strong> ' + escapeHtml(window.STX.getDiscordUsername(currentUser)));
+            lines.push('<strong>' + tr('reg.review.discord') + '</strong> ' + escapeHtml(window.STX.getDiscordUsername(currentUser)));
         }
         for (var i = 1; i <= 5; i++) {
             var pn = $('p' + i + 'Nick'), ps = $('p' + i + 'Steam');
-            lines.push('<strong>Игрок ' + i + ':</strong> ' +
+            lines.push('<strong>' + tr('reg.review.player') + ' ' + i + ':</strong> ' +
                 escapeHtml(pn.value.trim()) + ' | ' + escapeHtml(ps.value.trim()));
         }
         var sn = $('subNick'), ss = $('subSteam');
         if (sn && sn.value.trim()) {
-            lines.push('<strong>Запасной:</strong> ' + escapeHtml(sn.value.trim()) +
+            lines.push('<strong>' + tr('reg.review.sub') + '</strong> ' + escapeHtml(sn.value.trim()) +
                        (ss && ss.value.trim() ? ' | ' + escapeHtml(ss.value.trim()) : ''));
         }
         var r = $('review');
@@ -144,11 +144,22 @@
             row.className = 'player-row';
             row.innerHTML = '<div class="pnum">' + i + '</div>' +
                 '<div class="pfields">' +
-                '<input type="text" id="p' + i + 'Nick" placeholder="Никнейм игрока ' + i + '" maxlength="30">' +
-                '<input type="text" id="p' + i + 'Steam" placeholder="Steam ID / Ссылка на профиль" maxlength="100">' +
-                '<div class="perr" id="p' + i + 'Err">Заполните оба поля</div>' +
+                '<input type="text" id="p' + i + 'Nick" placeholder="' + tr('reg.players.ph.nick') + ' ' + i + '" maxlength="30">' +
+                '<input type="text" id="p' + i + 'Steam" placeholder="' + tr('reg.players.ph.steam') + '" maxlength="100">' +
+                '<div class="perr" id="p' + i + 'Err">' + tr('reg.players.err') + '</div>' +
                 '</div>';
             box.appendChild(row);
+        }
+    }
+
+    function refreshPlayerPlaceholders() {
+        for (var i = 1; i <= 5; i++) {
+            var n = $('p' + i + 'Nick');
+            var s = $('p' + i + 'Steam');
+            var e = $('p' + i + 'Err');
+            if (n) n.placeholder = tr('reg.players.ph.nick') + ' ' + i;
+            if (s) s.placeholder = tr('reg.players.ph.steam');
+            if (e) e.textContent = tr('reg.players.err');
         }
     }
 
@@ -201,7 +212,7 @@
 
         var did = window.STX.getDiscordId(currentUser);
         if (!did) {
-            alert('Не удалось получить Discord ID. Попробуйте перелогиниться.');
+            alert(tr('reg.err.discord'));
             return;
         }
 
@@ -209,7 +220,7 @@
         var submitBtn = $('submitForm');
         if (submitBtn) {
             submitBtn.disabled = true;
-            submitBtn.textContent = 'Отправка...';
+            submitBtn.textContent = tr('reg.btn.sending');
         }
 
         var teamData = {
@@ -272,16 +283,16 @@
                 submitting = false;
                 if (submitBtn) {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Отправить заявку';
+                    submitBtn.textContent = tr('reg.btn.submit');
                 }
-                var msg = err.message || 'Неизвестная ошибка';
+                var msg = err.message || 'Unknown error';
                 if (msg.indexOf('one_team_per_captain') > -1 || msg.indexOf('duplicate key') > -1) {
-                    alert('У вас уже есть заявка с этого Discord-аккаунта.');
+                    alert(tr('reg.err.duplicate'));
                     location.reload();
-                } else if (msg.indexOf('16 одобренных') > -1) {
-                    alert('Все 16 слотов уже заняты.');
+                } else if (msg.indexOf('16 одобренных') > -1 || msg.indexOf('16 aprobate') > -1) {
+                    alert(tr('reg.err.full'));
                 } else {
-                    alert('Ошибка отправки: ' + msg);
+                    alert(tr('reg.err.generic') + ' ' + msg);
                 }
             });
     }
@@ -307,7 +318,45 @@
         });
     }
 
+    function tr(k) { return (window.I18N && window.I18N.t) ? window.I18N.t(k) : k; }
+
+    function showRegistrationClosed() {
+        var rsteps = $('rsteps');
+        var fc = $('fcard');
+        if (rsteps) rsteps.style.display = 'none';
+        if (!fc) return;
+
+        fc.innerHTML =
+            '<div style="text-align:center;padding:40px 20px">' +
+                '<div style="width:80px;height:80px;margin:0 auto 20px;background:rgba(245,158,11,.1);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center">' +
+                    '<svg viewBox="0 0 24 24" width="40" height="40" fill="var(--gold)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>' +
+                '</div>' +
+                '<h3 data-i18n="reg.closed.title" style="font-family:\'Bebas Neue\',sans-serif;font-size:32px;color:var(--gold);letter-spacing:2px;margin-bottom:12px">' +
+                    tr('reg.closed.title') +
+                '</h3>' +
+                '<p data-i18n="reg.closed.hint" style="color:var(--txt2);font-size:14px;max-width:420px;margin:0 auto 24px;line-height:1.6">' + tr('reg.closed.hint') + '</p>' +
+                '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px">' +
+                    '<a href="https://discord.gg/stxleague" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:12px 24px">' +
+                        '<svg viewBox="0 0 24 24" width="18" height="18" style="fill:currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>' +
+                        '<span data-i18n="reg.closed.discord">' + tr('reg.closed.discord') + '</span>' +
+                    '</a>' +
+                    '<a href="https://t.me/stxleague" target="_blank" rel="noopener" class="btn-secondary" style="display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:12px 24px">' +
+                        '<svg viewBox="0 0 24 24" width="18" height="18" style="fill:currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.66-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.26-1.47-.4-1.41-.85.03-.23.34-.47 1.01-.72 3.94-1.72 6.56-2.85 7.87-3.39 3.73-1.55 4.5-1.82 5.01-1.83z"/></svg>' +
+                        '<span data-i18n="reg.closed.tg">' + tr('reg.closed.tg') + '</span>' +
+                    '</a>' +
+                '</div>' +
+            '</div>';
+    }
+
     function init() {
+        var cfg = window.STX_CONFIG || {};
+
+        // === Если регистрация закрыта — показываем заглушку и выходим ===
+        if (cfg.REGISTRATION_OPEN === false) {
+            showRegistrationClosed();
+            return;
+        }
+
         buildPlayers();
         bindFileUpload();
 
@@ -348,6 +397,14 @@
             }
         }
         tryBindAuth();
+
+        // При смене языка — обновить плейсхолдеры игроков
+        document.addEventListener('stx:lang', function() {
+            refreshPlayerPlaceholders();
+            // Если показывается review — пересобрать
+            var s3 = $('step3');
+            if (s3 && s3.classList.contains('on')) updateReview();
+        });
     }
 
     if (document.readyState === 'loading') {

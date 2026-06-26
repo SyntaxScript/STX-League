@@ -12,11 +12,14 @@
             return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
         });
     }
+    function tr(k) { return (window.I18N && window.I18N.t) ? window.I18N.t(k) : k; }
+
+    var lastTeams = null;
 
     function load() {
         var grid = document.getElementById('tgrid');
         if (!grid) return;
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--mut)">Загрузка...</div>';
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--mut)">' + tr('teams.loading') + '</div>';
 
         function tryLoad() {
             if (!window.STX || !window.STX.client) {
@@ -39,11 +42,12 @@
 
         if (res.error) {
             console.error('Load teams error:', res.error);
-            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--red)">Ошибка загрузки</div>';
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--red)">' + tr('teams.error') + '</div>';
             return;
         }
 
         var teams = res.data || [];
+        lastTeams = teams;
         var count = Math.min(teams.length, MAX);
 
         var tcnt = document.getElementById('tcnt');
@@ -68,8 +72,8 @@
             } else {
                 card.className = 'team-card empty';
                 card.innerHTML = '<div class="team-av">?</div>' +
-                    '<div class="team-name">Свободный слот</div>' +
-                    '<div class="team-players">Ожидаем команду</div>';
+                    '<div class="team-name">' + tr('teams.empty.name') + '</div>' +
+                    '<div class="team-players">' + tr('teams.empty.text') + '</div>';
             }
             grid.appendChild(card);
         }
@@ -80,4 +84,9 @@
     } else {
         load();
     }
+
+    // Перерисовать пустые слоты при смене языка
+    document.addEventListener('stx:lang', function() {
+        if (lastTeams) render({ data: lastTeams });
+    });
 })();

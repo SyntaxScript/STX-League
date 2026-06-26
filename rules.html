@@ -18,16 +18,16 @@
 
 <section id="rules" style="padding-top:140px">
     <div class="container">
-        <div class="sec-tag">Правила</div>
-        <h2 class="sec-title">Регламент турнира</h2>
+        <div class="sec-tag" data-i18n="rules.tag">Правила</div>
+        <h2 class="sec-title" data-i18n="rules.title">Регламент турнира</h2>
         <div class="acc">
-            <div class="acc-item"><button class="acc-head">Общие правила <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">Турнир STX League MD проводится в дисциплине Counter-Strike 2. Формат — 5 на 5. К участию допускаются игроки от 14 лет. Запрещено использование любых читов, баг-использования карт и стороннего ПО.</div></div></div>
-            <div class="acc-item"><button class="acc-head">Формат матчей <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">1/8 финала — Bo1. 1/4 и полуфиналы — Bo3. Матч за 3 место — Bo1. Гранд-финал — Bo5. Вето-процесс перед каждым матчем.</div></div></div>
-            <div class="acc-item"><button class="acc-head">Античит <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">Серверный античит + проверки демо. Читы — немедленная дисквалификация всей команды.</div></div></div>
-            <div class="acc-item"><button class="acc-head">Опоздания и неявки <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">Команды обязаны быть за 15 мин до матча. Опоздание до 10 мин — тех. поражение на карте. Более 15 мин — тех. поражение в матче.</div></div></div>
-            <div class="acc-item"><button class="acc-head">Спорные ситуации <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">Решение принимает судья. Капитан может подать протест. Решение судьи — окончательное.</div></div></div>
-            <div class="acc-item"><button class="acc-head">Дисквалификация <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">Причины: читы, баги, сговор, неявка, оскорбления. Взнос не возвращается.</div></div></div>
-            <div class="acc-item"><button class="acc-head">Замены игроков <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner">Замена — только из запасных, между матчами. После старта плей-офф замены запрещены.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q1.title">Общие правила</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q1.text">Турнир STX League MD проводится в дисциплине Counter-Strike 2. Формат — 5 на 5. К участию допускаются игроки от 14 лет. Запрещено использование любых читов, баг-использования карт и стороннего ПО.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q2.title">Формат матчей</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q2.text">1/8 финала — Bo1. 1/4 и полуфиналы — Bo3. Матч за 3 место — Bo1. Гранд-финал — Bo5. Вето-процесс перед каждым матчем.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q3.title">Античит</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q3.text">Серверный античит + проверки демо. Читы — немедленная дисквалификация всей команды.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q4.title">Опоздания и неявки</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q4.text">Команды обязаны быть за 15 мин до матча. Опоздание до 10 мин — тех. поражение на карте. Более 15 мин — тех. поражение в матче.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q5.title">Спорные ситуации</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q5.text">Решение принимает судья. Капитан может подать протест. Решение судьи — окончательное.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q6.title">Дисквалификация</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q6.text">Причины: читы, баги, сговор, неявка, оскорбления. Взнос не возвращается.</div></div></div>
+            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q7.title">Замены игроков</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q7.text">Замена — только из запасных, между матчами. После старта плей-офф замены запрещены.</div></div></div>
         </div>
     </div>
 </section>
@@ -36,6 +36,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="js/config.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/supabase-client.js"></script>
 <script src="js/common.js"></script>
 <script src="js/accordion.js"></script>

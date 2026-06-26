@@ -19,6 +19,8 @@
             return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
         });
     }
+    function tr(k) { return (window.I18N && window.I18N.t) ? window.I18N.t(k) : k; }
+    function getLocale() { return (window.I18N && window.I18N.lang === 'ro') ? 'ro-RO' : 'ru-RU'; }
 
     function showState(state) {
         // state: 'loading' | 'not_logged' | 'not_admin' | 'admin'
@@ -50,21 +52,21 @@
         if (!tbody) return;
 
         if (teams.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--mut);padding:28px">Нет заявок</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--mut);padding:28px">' + tr('admin.empty') + '</td></tr>';
             return;
         }
 
         tbody.innerHTML = teams.map(function(t, idx) {
-            var stxt = t.status === 'pending' ? 'Ожидает'
-                : t.status === 'approved' ? 'Одобрено' : 'Отклонено';
-            var date = new Date(t.submitted_at).toLocaleDateString('ru-RU', {
+            var stxt = t.status === 'pending' ? tr('admin.st.pending')
+                : t.status === 'approved' ? tr('admin.st.approved') : tr('admin.st.rejected');
+            var date = new Date(t.submitted_at).toLocaleDateString(getLocale(), {
                 day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit'
             });
             var btns = '';
-            if (t.status !== 'approved') btns += '<button class="abtn-sm abtn-ok" data-id="' + t.id + '">Одобрить</button>';
-            if (t.status !== 'rejected') btns += '<button class="abtn-sm abtn-no" data-id="' + t.id + '">Отклонить</button>';
-            btns += '<button class="abtn-sm" data-action="players" data-id="' + t.id + '" style="background:rgba(124,58,237,.18);color:var(--ac2)">Игроки</button>';
-            btns += '<button class="abtn-sm abtn-del" data-id="' + t.id + '" data-name="' + escapeHtml(t.team_name) + '">Удалить</button>';
+            if (t.status !== 'approved') btns += '<button class="abtn-sm abtn-ok" data-id="' + t.id + '">' + tr('admin.btn.approve') + '</button>';
+            if (t.status !== 'rejected') btns += '<button class="abtn-sm abtn-no" data-id="' + t.id + '">' + tr('admin.btn.reject') + '</button>';
+            btns += '<button class="abtn-sm" data-action="players" data-id="' + t.id + '" style="background:rgba(124,58,237,.18);color:var(--ac2)">' + tr('admin.btn.players') + '</button>';
+            btns += '<button class="abtn-sm abtn-del" data-id="' + t.id + '" data-name="' + escapeHtml(t.team_name) + '">' + tr('admin.btn.delete') + '</button>';
             return '<tr>' +
                 '<td>' + (idx + 1) + '</td>' +
                 '<td><strong>' + escapeHtml(t.team_name) + '</strong>' +
@@ -83,7 +85,7 @@
         });
         tbody.querySelectorAll('.abtn-no').forEach(function(b) {
             b.addEventListener('click', function() {
-                var reason = prompt('Причина отклонения (опционально):');
+                var reason = prompt(tr('admin.reject.reason'));
                 if (reason !== null) updateStatus(this.dataset.id, 'rejected', reason);
             });
         });
@@ -108,7 +110,7 @@
             .eq('id', teamId)
             .then(function(res) {
                 if (res.error) {
-                    alert('Ошибка: ' + res.error.message);
+                    alert(tr('admin.err.action') + ' ' + res.error.message);
                     return;
                 }
                 loadTeams();
@@ -122,7 +124,7 @@
             .eq('id', teamId)
             .then(function(res) {
                 if (res.error) {
-                    alert('Ошибка: ' + res.error.message);
+                    alert(tr('admin.err.action') + ' ' + res.error.message);
                     return;
                 }
                 loadTeams();
@@ -137,12 +139,12 @@
             .order('position')
             .then(function(res) {
                 if (res.error) {
-                    alert('Ошибка: ' + res.error.message);
+                    alert(tr('admin.err.action') + ' ' + res.error.message);
                     return;
                 }
                 var team = teamsCache.find(function(t) { return t.id === teamId; });
                 var html = '<div style="text-align:left"><h3 style="color:var(--ac2);margin-bottom:14px">' +
-                    escapeHtml(team ? team.team_name : 'Команда') + '</h3>';
+                    escapeHtml(team ? team.team_name : tr('admin.col.team')) + '</h3>';
                 res.data.forEach(function(p) {
                     html += '<div style="background:var(--bg2);padding:10px 14px;border-radius:8px;margin-bottom:6px;font-size:13px">' +
                         '<strong style="color:var(--ac2)">' + (p.is_sub ? 'S' : p.position) + '.</strong> ' +
@@ -166,7 +168,7 @@
             m.addEventListener('click', function(e) { if (e.target === m) m.classList.remove('on'); });
         }
         var box = $('infoModalBox');
-        box.innerHTML = html + '<div style="margin-top:18px;text-align:center"><button class="btn-cancel" id="infoModalClose">Закрыть</button></div>';
+        box.innerHTML = html + '<div style="margin-top:18px;text-align:center"><button class="btn-cancel" id="infoModalClose">' + tr('admin.modal.close') + '</button></div>';
         m.classList.add('on');
         $('infoModalClose').addEventListener('click', function() { m.classList.remove('on'); });
     }
@@ -183,12 +185,17 @@
         fetchTeams().then(function(res) {
             if (res.error) {
                 console.error(res.error);
-                alert('Ошибка загрузки заявок: ' + res.error.message);
+                alert(tr('admin.err.load') + ' ' + res.error.message);
                 return;
             }
             renderTable(res.data || []);
         });
     }
+
+    // При смене языка — перерисовать таблицу
+    document.addEventListener('stx:lang', function() {
+        if (teamsCache && teamsCache.length) renderTable(teamsCache);
+    });
 
     function bindDeleteModal() {
         var delModal = $('delModal');

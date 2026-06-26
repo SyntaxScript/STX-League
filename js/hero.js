@@ -135,8 +135,12 @@
     function initTypewriter() {
         var el = document.getElementById('tw');
         if (!el) return;
-        var text = '«Докажи что ты лучший»';
+        function getText() {
+            return (window.I18N && window.I18N.t) ? window.I18N.t('hero.slogan') : '«Докажи что ты лучший»';
+        }
+        var text = getText();
         var idx = 0;
+        var done = false;
         function type() {
             if (idx < text.length) {
                 el.innerHTML = text.substring(0, idx + 1) + '<span class="blnk"></span>';
@@ -144,9 +148,18 @@
                 setTimeout(type, 70 + Math.random() * 40);
             } else {
                 el.innerHTML = text + '<span class="blnk"></span>';
+                done = true;
             }
         }
         setTimeout(type, 2000);
+
+        // При смене языка — мгновенно показать новый текст без анимации
+        document.addEventListener('stx:lang', function() {
+            text = getText();
+            if (done) {
+                el.innerHTML = text + '<span class="blnk"></span>';
+            }
+        });
     }
 
     // ===== Parallax =====
