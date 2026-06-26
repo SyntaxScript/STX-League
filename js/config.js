@@ -13,7 +13,7 @@
 
         //  true — регистрация открыта
         //  false — регистрация закрыта
-        REGISTRATION_OPEN: true,
+        REGISTRATION_OPEN: false,
         REGISTRATION_CLOSED_MESSAGE: 'Регистрация на турнир пока закрыта',
         REGISTRATION_CLOSED_HINT: 'Скоро мы откроем приём заявок. Следите за новостями в Discord и Telegram!'
     };
