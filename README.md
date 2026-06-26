@@ -60,6 +60,6 @@
 
 <div align="center">
 
-Сделано командой **Syntax League** 💜
+Сделано командой **Syntax** 💜
 
 </div>
