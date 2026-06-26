@@ -1,12 +1,12 @@
 # STX League MD — структура проекта
 
-Сайт турнира по CS2 с реальным бэкендом на Supabase + Discord OAuth.
+Сайт турнира
 
 ## 📁 Структура
 
 ```
 /
-├── index.html, about.html, format.html, ...  ← 11 страниц
+├── index.html, about.html, format.html, ...
 │
 ├── css/style.css                ← все стили
 │
@@ -16,6 +16,5 @@
 │   ├── common.js                ← шапка/футер/preloader/auth UI
 │   ├── hero.js                  ← particles + countdown + typewriter
 │   ├── teams.js                 ← рендер approved-команд из БД
-│   ├── register.js              ← регистрация в Supabase
-│   ├── admin.js                 ← админ-панель (доступ через RLS)
+│   ├── register.js              ← регистрация
 │   └── accordion.js             ← rules + faq
