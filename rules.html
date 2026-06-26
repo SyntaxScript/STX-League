@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Правила и регламент турнира STX League MD.">
+    <meta name="description" content="Регистрация команды на турнир STX League MD по CS2.">
     <meta name="theme-color" content="#0a0a0f">
-    <title>Правила — STX League MD</title>
+    <title>Регистрация — STX League MD</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a0a0f'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='bold' fill='%23a855f7' font-family='sans-serif'>S</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,18 +16,54 @@
 
 <div id="nav-host"></div>
 
-<section id="rules" style="padding-top:140px">
+<section id="register" class="alt" style="padding-top:140px">
     <div class="container">
-        <div class="sec-tag" data-i18n="rules.tag">Правила</div>
-        <h2 class="sec-title" data-i18n="rules.title">Регламент турнира</h2>
-        <div class="acc">
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q1.title">Общие правила</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q1.text">Турнир STX League MD проводится в дисциплине Counter-Strike 2. Формат — 5 на 5. К участию допускаются игроки от 14 лет. Запрещено использование любых читов, баг-использования карт и стороннего ПО.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q2.title">Формат матчей</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q2.text">1/8 финала — Bo1. 1/4 и полуфиналы — Bo3. Матч за 3 место — Bo1. Гранд-финал — Bo5. Вето-процесс перед каждым матчем.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q3.title">Античит</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q3.text">Серверный античит + проверки демо. Читы — немедленная дисквалификация всей команды.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q4.title">Опоздания и неявки</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q4.text">Команды обязаны быть за 15 мин до матча. Опоздание до 10 мин — тех. поражение на карте. Более 15 мин — тех. поражение в матче.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q5.title">Спорные ситуации</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q5.text">Решение принимает судья. Капитан может подать протест. Решение судьи — окончательное.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q6.title">Дисквалификация</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q6.text">Причины: читы, баги, сговор, неявка, оскорбления. Взнос не возвращается.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="rules.q7.title">Замены игроков</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="rules.q7.text">Замена — только из запасных, между матчами. После старта плей-офф замены запрещены.</div></div></div>
+        <div class="sec-tag" data-i18n="reg.tag">Регистрация</div>
+        <h2 class="sec-title" data-i18n="reg.title">Зарегистрировать команду</h2>
+        <p class="sec-sub" data-i18n="reg.sub">Взнос: 200 MDL с команды • 16 слотов</p>
+        <div class="form-wrapper">
+            <div class="reg-steps" id="rsteps">
+                <div class="rstep cur" id="rs1"><div class="rstep-num">1</div><div class="rstep-lbl" data-i18n="reg.step1">Команда</div></div>
+                <div class="rstep" id="rs2"><div class="rstep-num">2</div><div class="rstep-lbl" data-i18n="reg.step2">Игроки</div></div>
+                <div class="rstep" id="rs3"><div class="rstep-num">3</div><div class="rstep-lbl" data-i18n="reg.step3">Подтверждение</div></div>
+            </div>
+            <div class="form-card" id="fcard">
+                <div id="authMsg" class="auth-msg">
+                    <svg viewBox="0 0 24 24" width="44" height="44" style="fill:#5865F2;margin-bottom:12px"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                    <p data-i18n="reg.auth.title" style="font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:1px">Войдите через Discord</p>
+                    <p class="hint" data-i18n="reg.auth.hint">Для регистрации команды необходима авторизация</p>
+                    <button class="btn-primary" id="authLoginBtn" type="button" data-i18n="reg.auth.btn" style="font-size:14px;padding:12px 28px">Войти через Discord</button>
+                </div>
+                <form id="regForm" novalidate style="display:none">
+                    <div class="form-step on" id="step1">
+                        <div class="form-row">
+                            <div class="form-group"><label data-i18n="reg.f.name">Название команды</label><input type="text" id="teamName" data-i18n-placeholder="reg.f.name.ph" placeholder="Night Wolves" required><div class="err" id="teamNameErr" data-i18n="reg.f.name.err">Введите название</div></div>
+                            <div class="form-group"><label data-i18n="reg.f.tag">Тег (2-5 символов)</label><input type="text" id="teamTag" data-i18n-placeholder="reg.f.tag.ph" placeholder="NW" minlength="2" maxlength="5"><div class="err" id="teamTagErr" data-i18n="reg.f.tag.err">2-5 символов</div></div>
+                        </div>
+                        <div class="form-group"><label data-i18n="reg.f.logo">Логотип (необязательно)</label><div class="file-up"><input type="file" id="teamLogo" accept="image/*"><div class="file-up-label" data-i18n="reg.f.logo.btn">📁 Загрузить логотип</div></div></div>
+                        <div class="form-group"><label data-i18n="reg.f.contact">Контакт капитана (Telegram)</label><input type="text" id="captainContact" data-i18n-placeholder="reg.f.contact.ph" placeholder="@username" required><div class="err" id="captainContactErr" data-i18n="reg.f.contact.err">Укажите Telegram</div></div>
+                        <div class="form-nav"><div></div><button type="button" class="btn-primary" id="goStep2" data-i18n="reg.btn.next">Далее</button></div>
+                    </div>
+                    <div class="form-step" id="step2">
+                        <div id="playersBox"></div>
+                        <div class="sub-row"><div class="sub-num">S</div><div class="pfields"><input type="text" id="subNick" data-i18n-placeholder="reg.sub.ph.nick" placeholder="Никнейм запасного"><input type="text" id="subSteam" data-i18n-placeholder="reg.sub.ph.steam" placeholder="Steam ID / Ссылка (необязательно)"></div></div>
+                        <div class="form-nav"><button type="button" class="btn-back" id="backStep1" data-i18n="reg.btn.back">Назад</button><button type="button" class="btn-primary" id="goStep3" data-i18n="reg.btn.next">Далее</button></div>
+                    </div>
+                    <div class="form-step" id="step3">
+                        <div style="background:var(--bg2);border-radius:var(--rad);padding:20px;margin-bottom:16px;border:1px solid var(--bor)">
+                            <h4 data-i18n="reg.review.title" style="font-family:'Oswald',sans-serif;letter-spacing:1px;margin-bottom:12px;color:var(--ac2)">Проверьте данные</h4>
+                            <div id="review" style="font-size:13px;color:var(--txt2);line-height:2.1"></div>
+                        </div>
+                        <div class="form-group"><div class="chk-group"><input type="checkbox" id="rulesAgree" required><label for="rulesAgree"><span data-i18n="reg.agree">Согласен с</span> <a href="rules.html" style="color:var(--ac2)" data-i18n="reg.agree.link">правилами турнира</a></label></div><div class="err" id="rulesAgreeErr" data-i18n="reg.agree.err" style="margin-top:3px">Необходимо согласиться</div></div>
+                        <div class="form-nav"><button type="button" class="btn-back" id="backStep2" data-i18n="reg.btn.back">Назад</button><button type="submit" class="btn-primary" id="submitForm" data-i18n="reg.btn.submit">Отправить заявку</button></div>
+                    </div>
+                </form>
+                <div class="form-ok" id="formOk">
+                    <div class="ok-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 16l8 8L27 8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                    <h3 data-i18n="reg.ok.title">Заявка отправлена!</h3>
+                    <p data-i18n="reg.ok.text">Мы свяжемся с капитаном в Telegram для подтверждения.<br>Реквизиты для оплаты взноса (200 MDL) — после подтверждения.</p>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -38,7 +74,8 @@
 <script src="js/config.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/supabase-client.js"></script>
+<script src="js/settings.js"></script>
 <script src="js/common.js"></script>
-<script src="js/accordion.js"></script>
+<script src="js/register.js"></script>
 </body>
 </html>

@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Частые вопросы по турниру STX League MD.">
+    <meta name="description" content="Админ-панель турнира STX League MD.">
     <meta name="theme-color" content="#0a0a0f">
-    <title>FAQ — STX League MD</title>
+    <meta name="robots" content="noindex,nofollow">
+    <title>Админ-панель — STX League MD</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a0a0f'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='bold' fill='%23a855f7' font-family='sans-serif'>S</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,19 +17,84 @@
 
 <div id="nav-host"></div>
 
-<section id="faq" class="alt" style="padding-top:140px">
+<section id="apanel" style="padding-top:140px;display:block">
     <div class="container">
-        <div class="sec-tag" data-i18n="faq.tag">FAQ</div>
-        <h2 class="sec-title" data-i18n="faq.title">Частые вопросы</h2>
-        <div class="acc">
-            <div class="acc-item"><button class="acc-head"><span data-i18n="faq.q1.title">Сколько стоит участие?</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="faq.q1.text">Взнос — 200 MDL с команды. Оплата после подтверждения заявки.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="faq.q2.title">Можно ли с неполным составом?</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="faq.q2.text">Нет. На начало матча — 5 игроков. Менее 5 — тех. поражение.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="faq.q3.title">Где будет трансляция?</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="faq.q3.text">В Discord-сервере.</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="faq.q4.title">Как связаться с организаторами?</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="faq.q4.text">Telegram: @stxleague | Email: stxleague@gmail.com | Discord: discord.gg/stxleague</div></div></div>
-            <div class="acc-item"><button class="acc-head"><span data-i18n="faq.q5.title">Будет ли следующий турнир?</span> <span class="acc-arr">&#9660;</span></button><div class="acc-body"><div class="acc-inner" data-i18n="faq.q5.text">Да! Это первый из серии. Лучшие команды получат приглашения.</div></div></div>
+        <div class="sec-tag" data-i18n="admin.tag">Администрирование</div>
+        <h2 class="sec-title" data-i18n="admin.title">Панель управления</h2>
+
+        <!-- LOADING -->
+        <div id="state_loading" style="text-align:center;padding:60px 20px">
+            <div class="pring" style="margin:0 auto"></div>
+            <p style="color:var(--mut);margin-top:20px" data-i18n="admin.loading">Проверка доступа...</p>
+        </div>
+
+        <!-- NOT LOGGED IN -->
+        <div id="state_not_logged" style="display:none;max-width:480px;margin:0 auto;text-align:center;background:var(--card);border:1px solid var(--bor);border-radius:var(--rad2);padding:40px 30px">
+            <svg viewBox="0 0 24 24" width="56" height="56" style="fill:var(--ac2);margin-bottom:16px"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+            <h3 data-i18n="admin.no_auth.title" style="font-family:'Oswald',sans-serif;font-size:20px;margin-bottom:10px">Требуется авторизация</h3>
+            <p data-i18n="admin.no_auth.text" style="color:var(--mut);font-size:14px;margin-bottom:24px">Войдите через Discord, чтобы продолжить.<br>Доступ имеют только администраторы турнира.</p>
+            <button class="btn-primary" id="adminLoginBtn" data-i18n="admin.no_auth.btn">Войти через Discord</button>
+        </div>
+
+        <!-- LOGGED IN BUT NOT ADMIN -->
+        <div id="state_not_admin" style="display:none;max-width:480px;margin:0 auto;text-align:center;background:var(--card);border:1px solid var(--red);border-radius:var(--rad2);padding:40px 30px">
+            <svg viewBox="0 0 24 24" width="56" height="56" style="fill:var(--red);margin-bottom:16px"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/></svg>
+            <h3 data-i18n="admin.no_admin.title" style="font-family:'Oswald',sans-serif;font-size:20px;color:var(--red);margin-bottom:10px">Доступ запрещён</h3>
+            <p data-i18n="admin.no_admin.text" style="color:var(--mut);font-size:14px;margin-bottom:24px">Ваш Discord-аккаунт не имеет прав администратора.<br>Если это ошибка — обратитесь к организаторам.</p>
+            <button class="btn-back" id="adminLogoutBtn" data-i18n="admin.no_admin.btn">Выйти</button>
+        </div>
+
+        <!-- ADMIN PANEL -->
+        <div id="state_admin" style="display:none">
+            <!-- Settings Panel -->
+            <div style="background:var(--card);border:1px solid var(--bor);border-radius:var(--rad2);padding:20px 24px;margin-bottom:20px">
+                <h3 style="font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:14px" data-i18n="admin.settings.title">Настройки сайта</h3>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+                    <div>
+                        <div style="font-family:'Oswald',sans-serif;font-size:16px;color:var(--txt)" data-i18n="admin.settings.reg.label">Регистрация команд</div>
+                        <div style="font-size:12px;color:var(--mut);margin-top:2px" id="regStatusHint" data-i18n="admin.settings.reg.hint">Откройте, когда захотите начать приём заявок</div>
+                    </div>
+                    <label class="toggle-switch" style="position:relative;display:inline-block;width:64px;height:32px;cursor:pointer">
+                        <input type="checkbox" id="regToggle" style="opacity:0;width:0;height:0">
+                        <span class="toggle-slider" style="position:absolute;inset:0;background:#2a2a44;border-radius:32px;transition:.3s">
+                            <span class="toggle-knob" style="position:absolute;left:4px;top:4px;width:24px;height:24px;background:#fff;border-radius:50%;transition:.3s"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+                <button class="btn-back" id="adminRefresh" data-i18n="admin.refresh" style="font-size:12px;padding:8px 18px">↻ Обновить</button>
+            </div>
+            <div class="astats">
+                <div class="astat"><div class="astat-num" id="stotal">0</div><div class="astat-lbl" data-i18n="admin.s.total">Всего</div></div>
+                <div class="astat"><div class="astat-num" id="spending" style="color:var(--gold)">0</div><div class="astat-lbl" data-i18n="admin.s.pending">Ожидает</div></div>
+                <div class="astat"><div class="astat-num" id="sapproved" style="color:var(--grn)">0</div><div class="astat-lbl" data-i18n="admin.s.approved">Одобрено</div></div>
+                <div class="astat"><div class="astat-num" id="srejected" style="color:var(--red)">0</div><div class="astat-lbl" data-i18n="admin.s.rejected">Отклонено</div></div>
+            </div>
+            <div style="overflow-x:auto">
+                <table class="atable">
+                    <thead><tr><th>#</th><th data-i18n="admin.col.team">Команда</th><th data-i18n="admin.col.captain">Капитан</th><th data-i18n="admin.col.discord">Discord</th><th data-i18n="admin.col.date">Дата</th><th data-i18n="admin.col.status">Статус</th><th data-i18n="admin.col.actions">Действия</th></tr></thead>
+                    <tbody id="atbody"><tr><td colspan="7" style="text-align:center;color:var(--mut);padding:28px" data-i18n="common.loading">Загрузка...</td></tr></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </section>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="del-modal" id="delModal">
+    <div class="del-modal-box">
+        <h3 data-i18n="admin.del.title">⚠️ Удаление команды</h3>
+        <p data-i18n="admin.del.text">Вы уверены, что хотите удалить эту заявку?</p>
+        <div class="team-del-name" id="delTeamName"></div>
+        <p style="font-size:12px;color:var(--mut)" data-i18n="admin.del.warn">Это действие нельзя отменить!</p>
+        <div class="del-modal-btns">
+            <button class="btn-cancel" id="delCancel" data-i18n="admin.del.cancel">Отмена</button>
+            <button class="btn-confirm-del" id="delConfirm" data-i18n="admin.del.confirm">Удалить</button>
+        </div>
+    </div>
+</div>
 
 <div id="footer-host"></div>
 
@@ -36,7 +102,8 @@
 <script src="js/config.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/supabase-client.js"></script>
+<script src="js/settings.js"></script>
 <script src="js/common.js"></script>
-<script src="js/accordion.js"></script>
+<script src="js/admin.js"></script>
 </body>
 </html>

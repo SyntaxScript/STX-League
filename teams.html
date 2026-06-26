@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Зарегистрированные команды турнира STX League MD.">
+    <meta name="description" content="Таймлайн турнира STX League MD — 15 Августа 2026.">
     <meta name="theme-color" content="#0a0a0f">
-    <title>Команды — STX League MD</title>
+    <title>Расписание — STX League MD</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a0a0f'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='bold' fill='%23a855f7' font-family='sans-serif'>S</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,17 +16,20 @@
 
 <div id="nav-host"></div>
 
-<section id="teams" style="padding-top:140px">
+<section id="schedule" class="alt" style="padding-top:140px">
     <div class="container">
-        <div class="sec-tag" data-i18n="teams.tag">Команды</div>
-        <h2 class="sec-title" data-i18n="teams.title">Зарегистрированные команды</h2>
-        <div class="teams-header">
-            <div class="teams-counter"><span data-i18n="teams.counter">Зарегистрировано:</span> <span id="tcnt">0</span>/16</div>
-            <div class="prog-wrap"><div class="prog-fill" id="pbar" style="width:0%"></div></div>
-        </div>
-        <div class="teams-grid" id="tgrid"></div>
-        <div style="text-align:center;margin-top:40px">
-            <a href="register.html" class="btn-primary" data-i18n="hero.btn.register">Зарегистрировать команду</a>
+        <div class="sec-tag" data-i18n="sched.tag">Расписание</div>
+        <h2 class="sec-title" data-i18n="sched.title">Таймлайн турнира</h2>
+        <p class="sec-sub" data-i18n="sched.sub">15 Августа 2026 • Время местное (EEST)</p>
+        <div class="timeline">
+            <div class="tl-item"><div class="tl-time">10:00</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e1">Регистрация<br>и чекин</div></div>
+            <div class="tl-item"><div class="tl-time">11:00</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e2">Открытие<br>турнира</div></div>
+            <div class="tl-item"><div class="tl-time">11:30</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e3">1/8 финала<br>Bo1</div></div>
+            <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e4">1/4 финала<br>Bo3</div></div>
+            <div class="tl-item"><div class="tl-time">14:30</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e5">Полуфиналы<br>Bo3</div></div>
+            <div class="tl-item"><div class="tl-time">16:30</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e6">Матч за<br>3 место Bo1</div></div>
+            <div class="tl-item"><div class="tl-time">17:30</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e7">Гранд-финал<br>Bo5</div></div>
+            <div class="tl-item"><div class="tl-time">18:30</div><div class="tl-dot"></div><div class="tl-ev" data-i18n="sched.e8">Награждение</div></div>
         </div>
     </div>
 </section>
@@ -37,7 +40,7 @@
 <script src="js/config.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/supabase-client.js"></script>
+<script src="js/settings.js"></script>
 <script src="js/common.js"></script>
-<script src="js/teams.js"></script>
 </body>
 </html>
