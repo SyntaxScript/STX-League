@@ -46,6 +46,23 @@
 
         <!-- ADMIN PANEL -->
         <div id="state_admin" style="display:none">
+            <!-- Settings Panel -->
+            <div style="background:var(--card);border:1px solid var(--bor);border-radius:var(--rad2);padding:20px 24px;margin-bottom:20px">
+                <h3 style="font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);margin-bottom:14px" data-i18n="admin.settings.title">Настройки сайта</h3>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+                    <div>
+                        <div style="font-family:'Oswald',sans-serif;font-size:16px;color:var(--txt)" data-i18n="admin.settings.reg.label">Регистрация команд</div>
+                        <div style="font-size:12px;color:var(--mut);margin-top:2px" id="regStatusHint" data-i18n="admin.settings.reg.hint">Откройте, когда захотите начать приём заявок</div>
+                    </div>
+                    <label class="toggle-switch" style="position:relative;display:inline-block;width:64px;height:32px;cursor:pointer">
+                        <input type="checkbox" id="regToggle" style="opacity:0;width:0;height:0">
+                        <span class="toggle-slider" style="position:absolute;inset:0;background:#2a2a44;border-radius:32px;transition:.3s">
+                            <span class="toggle-knob" style="position:absolute;left:4px;top:4px;width:24px;height:24px;background:#fff;border-radius:50%;transition:.3s"></span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
             <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
                 <button class="btn-back" id="adminRefresh" data-i18n="admin.refresh" style="font-size:12px;padding:8px 18px">↻ Обновить</button>
             </div>
@@ -85,7 +102,8 @@
 <script src="js/config.js"></script>
 <script src="js/i18n.js"></script>
 <script src="js/supabase-client.js"></script>
+<script src="js/settings.js"></script>
 <script src="js/common.js"></script>
 <script src="js/admin.js"></script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a11d26fe3e36e4a9',t:'MTc4MjQ4Njc2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
