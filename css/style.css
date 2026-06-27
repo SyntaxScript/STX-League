@@ -1436,6 +1436,27 @@ footer .copy { color: var(--mut); font-size: 11px; }
     cursor: pointer;
 }
 
+/* DETAILS MODAL (большая модалка с инфой о команде) */
+.details-modal-box {
+    max-width: 720px !important;
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+    text-align: left !important;
+    padding: 28px !important;
+    border-color: var(--ac) !important;
+}
+.details-modal-box::-webkit-scrollbar { width: 8px; }
+.details-modal-box::-webkit-scrollbar-thumb { background: var(--ac); border-radius: 4px; }
+@media (max-width: 640px) {
+    .details-modal-box .details-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+.team-row:hover td {
+    background: rgba(124, 58, 237, .08) !important;
+}
+
 /* TOGGLE SWITCH */
 .toggle-switch input:checked + .toggle-slider {
     background: var(--ac) !important;

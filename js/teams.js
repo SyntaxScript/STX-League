@@ -28,7 +28,7 @@
             }
             window.STX.client
                 .from('teams_with_players')
-                .select('id, team_name, team_tag, players')
+                .select('id, team_name, team_tag, logo_url, players')
                 .eq('status', 'approved')
                 .order('submitted_at', { ascending: true })
                 .then(render);
@@ -66,7 +66,15 @@
                     .filter(function(p) { return !p.is_sub; })
                     .map(function(p) { return escapeHtml(p.nickname); })
                     .join(' • ');
-                card.innerHTML = '<div class="team-av">' + av + '</div>' +
+                // Если есть лого — показываем картинку, иначе буквы из тега
+                var avHtml = t.logo_url
+                    ? '<div class="team-av" style="background:#0a0a14;overflow:hidden;padding:0">' +
+                        '<img src="' + escapeHtml(t.logo_url) + '" alt="" ' +
+                        'style="width:100%;height:100%;object-fit:cover" ' +
+                        'onerror="this.parentElement.innerHTML=\'' + av + '\'">' +
+                      '</div>'
+                    : '<div class="team-av">' + av + '</div>';
+                card.innerHTML = avHtml +
                     '<div class="team-name">' + escapeHtml(t.team_name) + '</div>' +
                     '<div class="team-players">' + (nicks || '—') + '</div>';
             } else {

@@ -122,6 +122,13 @@
         if (currentUser) {
             lines.push('<strong>' + tr('reg.review.discord') + '</strong> ' + escapeHtml(window.STX.getDiscordUsername(currentUser)));
         }
+        // Превью лого если есть
+        var logoInput = $('teamLogo');
+        if (logoInput && logoInput.files && logoInput.files[0]) {
+            var file = logoInput.files[0];
+            lines.push('<strong>' + tr('reg.review.logo') + '</strong> ' + escapeHtml(file.name) +
+                       ' (' + (file.size / 1024).toFixed(0) + ' KB)');
+        }
         for (var i = 1; i <= 5; i++) {
             var pn = $('p' + i + 'Nick'), ps = $('p' + i + 'Steam');
             lines.push('<strong>' + tr('reg.review.player') + ' ' + i + ':</strong> ' +
@@ -163,17 +170,87 @@
         }
     }
 
+    var MAX_LOGO_BYTES = 5 * 1024 * 1024; // 5 MB
+    var ALLOWED_LOGO_TYPES = ['image/png','image/jpeg','image/jpg','image/webp'];
+
     function bindFileUpload() {
         var input = $('teamLogo');
         if (!input) return;
         input.addEventListener('change', function() {
             var label = document.querySelector('.file-up-label');
-            if (label && this.files.length > 0) {
-                label.textContent = '✅ ' + this.files[0].name;
+            var err = $('teamLogoErr');
+            if (err) err.style.display = 'none';
+
+            if (!this.files.length) {
+                if (label) {
+                    label.textContent = tr('reg.f.logo.btn');
+                    label.style.color = '';
+                    label.style.borderColor = '';
+                }
+                return;
+            }
+
+            var file = this.files[0];
+
+            // Валидация размера
+            if (file.size > MAX_LOGO_BYTES) {
+                this.value = '';
+                if (err) {
+                    err.textContent = tr('reg.f.logo.err.size');
+                    err.style.display = 'block';
+                }
+                if (label) {
+                    label.textContent = tr('reg.f.logo.btn');
+                    label.style.color = 'var(--red)';
+                    label.style.borderColor = 'var(--red)';
+                }
+                return;
+            }
+
+            // Валидация типа
+            if (ALLOWED_LOGO_TYPES.indexOf(file.type) === -1) {
+                this.value = '';
+                if (err) {
+                    err.textContent = tr('reg.f.logo.err.type');
+                    err.style.display = 'block';
+                }
+                if (label) {
+                    label.textContent = tr('reg.f.logo.btn');
+                    label.style.color = 'var(--red)';
+                    label.style.borderColor = 'var(--red)';
+                }
+                return;
+            }
+
+            if (label) {
+                label.textContent = '✅ ' + file.name + ' (' + (file.size / 1024).toFixed(0) + ' KB)';
                 label.style.color = '#22c55e';
                 label.style.borderColor = '#22c55e';
             }
         });
+    }
+
+    // Загрузка лого в Supabase Storage. Возвращает Promise с public URL или null.
+    function uploadLogo(file, discordId) {
+        if (!file) return Promise.resolve(null);
+        var ext = (file.name.split('.').pop() || 'png').toLowerCase();
+        // путь: <discord_id>/<timestamp>.<ext>
+        // (RLS-политика требует чтобы первая папка = discord_id юзера)
+        var path = discordId + '/' + Date.now() + '.' + ext;
+
+        return window.STX.client.storage
+            .from('team-logos')
+            .upload(path, file, {
+                cacheControl: '3600',
+                upsert: false,
+                contentType: file.type
+            })
+            .then(function(res) {
+                if (res.error) throw res.error;
+                // Получить публичный URL
+                var pub = window.STX.client.storage.from('team-logos').getPublicUrl(path);
+                return pub.data.publicUrl;
+            });
     }
 
     // === Проверить, есть ли уже заявка от этого Discord ID ===
@@ -223,24 +300,30 @@
             submitBtn.textContent = tr('reg.btn.sending');
         }
 
-        var teamData = {
-            team_name: $('teamName').value.trim(),
-            team_tag: $('teamTag').value.trim() || null,
-            captain_contact: $('captainContact').value.trim(),
-            captain_discord_id: did,
-            captain_username: window.STX.getDiscordUsername(currentUser),
-            status: 'pending'
-        };
-
         var subNick = $('subNick').value.trim();
         var subSteam = $('subSteam').value.trim();
+        var logoInput = $('teamLogo');
+        var logoFile = (logoInput && logoInput.files && logoInput.files[0]) || null;
 
-        // 1. INSERT team
-        window.STX.client
-            .from('teams')
-            .insert(teamData)
-            .select()
-            .single()
+        // 1. (опционально) загрузить лого в Storage
+        uploadLogo(logoFile, did)
+            .then(function(logoUrl) {
+                // 2. INSERT team
+                var teamData = {
+                    team_name: $('teamName').value.trim(),
+                    team_tag: $('teamTag').value.trim() || null,
+                    captain_contact: $('captainContact').value.trim(),
+                    captain_discord_id: did,
+                    captain_username: window.STX.getDiscordUsername(currentUser),
+                    logo_url: logoUrl,
+                    status: 'pending'
+                };
+                return window.STX.client
+                    .from('teams')
+                    .insert(teamData)
+                    .select()
+                    .single();
+            })
             .then(function(res) {
                 if (res.error) throw res.error;
                 var teamId = res.data.id;
@@ -291,6 +374,10 @@
                     location.reload();
                 } else if (msg.indexOf('16 одобренных') > -1 || msg.indexOf('16 aprobate') > -1) {
                     alert(tr('reg.err.full'));
+                } else if (msg.indexOf('exceeded') > -1 || msg.indexOf('size') > -1) {
+                    alert(tr('reg.err.logo'));
+                } else if (msg.indexOf('mime') > -1 || msg.indexOf('Invalid type') > -1) {
+                    alert(tr('reg.err.logo'));
                 } else {
                     alert(tr('reg.err.generic') + ' ' + msg);
                 }
