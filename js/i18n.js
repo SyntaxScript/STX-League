@@ -1,3 +1,13 @@
+/* ===== STX League MD — i18n (RU + RO) =====
+   Использование в HTML:
+     <span data-i18n="hero.title">Текст по умолчанию</span>
+     <input data-i18n-placeholder="form.name" placeholder="...">
+     <a data-i18n-title="nav.profile" title="...">
+   Использование в JS:
+     window.I18N.t('hero.title')
+     window.I18N.setLang('ro')
+     window.I18N.lang  // текущий язык
+*/
 (function() {
     'use strict';
 
@@ -445,24 +455,22 @@
             'faq.q1.text':    'Taxa — 200 MDL per echipă. Plata după confirmarea cererii.',
             'faq.q2.title':   'Se poate participa cu un lot incomplet?',
             'faq.q2.text':    'Nu. La începutul meciului — 5 jucători. Mai puțin de 5 — înfrângere tehnică.',
-            'faq.q3.title':   'Va fi un alt turneu?',
-            'faq.q3.text':    'Da! Acesta este primul dintr-o serie. Cele mai bune echipe vor primi invitații.',
-            'faq.q4.title':   'Sunt permise cheat-urile, bug-urile sau programele terțe?',
-            'faq.q4.text':    'Nu. Este strict interzis. Sunt interzise: cheat-uri, scripturi, abuz de bug-uri, programe terțe care oferă avantaje, orice formă de joc neloial. Pentru astfel de încălcări, echipa va fi descalificată.',
-            'faq.q5.title':   'Unde va fi transmisia?',
-            'faq.q5.text':    'Pe Tik-Tok.',
-            'faq.q6.title':   'Ce se întâmplă dacă există insulte sau comportament toxic?',
-            'faq.q6.text':    'Insultele, amenințările, provocările și comportamentul toxic sunt interzise. În funcție de situație, organizatorii pot emite: avertisment, înfrângere tehnică, descalificare.',
-            'faq.q7.title':   'Se poate face stream la meciurile proprii?',
-            'faq.q7.text':    'Da, dar organizatorii recomandă să folosiți o întârziere la transmisie pentru a evita posibile încălcări ale jocului corect.',
-            'faq.q8.title':  'Ce se întâmplă dacă echipa întârzie?',
-            'faq.q8.text':   'Întârzierea poate duce la înfrângere tehnică sau alte consecințe, în funcție de situație.',
-            'faq.q9.title':  'Ce hărți vor fi folosite?',
-            'faq.q9.text':   'În turneu se folosește următorul pool de hărți: Mirage, Inferno, Anubis, Nuke, Ancient, Dust2, Vertigo, Cache.',
-            'faq.q10.title':  'Cum pot contacta organizatorii?',
-            'faq.q10.text':   'Telegram: @vecnoyteplo | Email: vecnoyteplo@gmail.com | Discord: discord.gg/vecnoyteplo',
-            'faq.q11.title':  'Va fi un alt turneu?',
-            'faq.q11.text':   'Da, STX League MD este gândit ca o serie de turnee. Cele mai bune echipe din turneul curent pot primi prioritate sau invitații la evenimente viitoare.',
+            'faq.q3.title':   'Sunt permise cheat-urile, bug-urile sau programele terțe?',
+            'faq.q3.text':    'Nu. Este strict interzis. Sunt interzise: cheat-uri, scripturi, abuz de bug-uri, programe terțe care oferă avantaje, orice formă de joc neloial. Pentru astfel de încălcări, echipa va fi descalificată.',
+            'faq.q4.title':   'Unde va fi transmisia?',
+            'faq.q4.text':    'Pe Tik-Tok.',
+            'faq.q5.title':   'Ce se întâmplă dacă există insulte sau comportament toxic?',
+            'faq.q5.text':    'Insultele, amenințările, provocările și comportamentul toxic sunt interzise. În funcție de situație, organizatorii pot emite: avertisment, înfrângere tehnică, descalificare.',
+            'faq.q6.title':   'Se poate face stream la meciurile proprii?',
+            'faq.q6.text':    'Da, dar organizatorii recomandă să folosiți o întârziere la transmisie pentru a evita posibile încălcări ale jocului corect.',
+            'faq.q7.title':  'Ce se întâmplă dacă echipa întârzie?',
+            'faq.q7.text':   'Întârzierea poate duce la înfrângere tehnică sau alte consecințe, în funcție de situație.',
+            'faq.q8.title':  'Ce hărți vor fi folosite?',
+            'faq.q8.text':   'În turneu se folosește următorul pool de hărți: Mirage, Inferno, Anubis, Nuke, Ancient, Dust2, Vertigo, Cache.',
+            'faq.q9.title':  'Cum pot contacta organizatorii?',
+            'faq.q9.text':   'Telegram: @vecnoyteplo | Email: vecnoyteplo@gmail.com | Discord: discord.gg/vecnoyteplo',
+            'faq.q10.title':  'Va fi un alt turneu?',
+            'faq.q10.text':   'Da, STX League MD este gândit ca o serie de turnee. Cele mai bune echipe din turneul curent pot primi prioritate sau invitații la evenimente viitoare.',
 
             // ===== Partners =====
             'partners.tag':   'Parteneri',
