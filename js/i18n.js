@@ -1,13 +1,3 @@
-/* ===== STX League MD — i18n (RU + RO) =====
-   Использование в HTML:
-     <span data-i18n="hero.title">Текст по умолчанию</span>
-     <input data-i18n-placeholder="form.name" placeholder="...">
-     <a data-i18n-title="nav.profile" title="...">
-   Использование в JS:
-     window.I18N.t('hero.title')
-     window.I18N.setLang('ro')
-     window.I18N.lang  // текущий язык
-*/
 (function() {
     'use strict';
 
