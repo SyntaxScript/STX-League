@@ -228,6 +228,13 @@
             'admin.modal.close':  'Закрыть',
             'admin.err.load':    'Ошибка загрузки заявок:',
             'admin.err.action':  'Ошибка:',
+            'admin.settings.title': '⚙️ Настройки сайта',
+            'admin.settings.reg.label': 'Регистрация команд',
+            'admin.settings.reg.hint': 'Откройте, когда захотите начать приём заявок',
+            'admin.settings.reg.open':  'Регистрация открыта — игроки могут подавать заявки',
+            'admin.settings.reg.closed': 'Регистрация закрыта — на странице показывается заглушка',
+            'admin.settings.saved': '✅ Сохранено',
+            'admin.settings.save_err': 'Ошибка сохранения:',
 
             // ===== Common =====
             'common.section.tag.about': 'О турнире',
@@ -466,6 +473,13 @@
             'admin.modal.close':  'Închide',
             'admin.err.load':    'Eroare la încărcarea cererilor:',
             'admin.err.action':  'Eroare:',
+            'admin.settings.title': '⚙️ Setări site',
+            'admin.settings.reg.label': 'Înregistrarea echipelor',
+            'admin.settings.reg.hint': 'Activează când vrei să începi primirea cererilor',
+            'admin.settings.reg.open':  'Înregistrarea este deschisă — jucătorii pot trimite cereri',
+            'admin.settings.reg.closed': 'Înregistrarea este închisă — pe pagină se afișează mesaj',
+            'admin.settings.saved': '✅ Salvat',
+            'admin.settings.save_err': 'Eroare la salvare:',
 
             // ===== Common =====
             'common.section.tag.about': 'Despre turneu',

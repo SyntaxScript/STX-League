@@ -312,10 +312,32 @@
 
     // ===== Применить статус регистрации (открыта/закрыта) =====
     function applyRegistrationStatus() {
-        var cfg = window.STX_CONFIG || {};
-        if (cfg.REGISTRATION_OPEN !== false) return; // открыта — ничего не меняем
+        // Берём из настроек БД (если загружены), иначе из config (на случай если БД не доступна)
+        var isOpen;
+        if (window.STX_SETTINGS && window.STX_SETTINGS.isLoaded()) {
+            isOpen = window.STX_SETTINGS.get('registration_open') === true;
+        } else {
+            var cfg = window.STX_CONFIG || {};
+            isOpen = cfg.REGISTRATION_OPEN !== false;
+        }
 
         var heroRegBtn = document.querySelector('.hero-btns a[href="register.html"]');
+        var styleEl = document.getElementById('reg-closed-style');
+
+        if (isOpen) {
+            // Открыта — вернуть в исходное состояние
+            if (heroRegBtn && heroRegBtn.dataset.regClosed) {
+                delete heroRegBtn.dataset.regClosed;
+                heroRegBtn.setAttribute('data-i18n', 'hero.btn.register');
+                heroRegBtn.textContent = t('hero.btn.register');
+                heroRegBtn.style.opacity = '';
+                heroRegBtn.style.cursor = '';
+            }
+            if (styleEl) styleEl.remove();
+            return;
+        }
+
+        // Закрыта — заблокировать
         if (heroRegBtn && !heroRegBtn.dataset.regClosed) {
             heroRegBtn.dataset.regClosed = '1';
             heroRegBtn.setAttribute('data-i18n', 'hero.btn.reg_closed');
@@ -327,9 +349,7 @@
                 alert(t('reg.closed.title') + '\n\n' + t('reg.closed.hint'));
             });
         }
-
-        // Скрыть кнопку "Регистрация" в шапке (.btn-reg) — добавляем CSS
-        if (!document.getElementById('reg-closed-style')) {
+        if (!styleEl) {
             var style = document.createElement('style');
             style.id = 'reg-closed-style';
             style.textContent = '.btn-reg{display:none !important}';
@@ -354,6 +374,11 @@
         // При смене языка — переприменить (но НЕ пересоздавать шапку, чтобы не сбрасывать состояние)
         document.addEventListener('stx:lang', function() {
             if (window.I18N) window.I18N.applyToDOM();
+            applyRegistrationStatus();
+        });
+
+        // При загрузке/изменении настроек из БД — переприменить статус регистрации
+        document.addEventListener('stx:settings', function() {
             applyRegistrationStatus();
         });
 

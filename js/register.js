@@ -349,10 +349,32 @@
     }
 
     function init() {
-        var cfg = window.STX_CONFIG || {};
+        // Ждём загрузки настроек из БД
+        if (window.STX_SETTINGS) {
+            window.STX_SETTINGS.onReady(function() {
+                initAfterSettings();
+            });
+        } else {
+            initAfterSettings();
+        }
 
+        // При смене настроек (например админ открыл/закрыл регистрацию) — перезагрузить страницу
+        document.addEventListener('stx:settings', function() {
+            // Только если состояние реально изменилось — иначе будет цикл
+            var nowOpen = window.STX_SETTINGS && window.STX_SETTINGS.get('registration_open') === true;
+            var wasShownClosed = !!document.querySelector('[data-i18n="reg.closed.title"]');
+            if (nowOpen && wasShownClosed) location.reload();
+            if (!nowOpen && !wasShownClosed) location.reload();
+        });
+    }
+
+    function initAfterSettings() {
         // === Если регистрация закрыта — показываем заглушку и выходим ===
-        if (cfg.REGISTRATION_OPEN === false) {
+        var isOpen = window.STX_SETTINGS
+            ? window.STX_SETTINGS.get('registration_open') === true
+            : (window.STX_CONFIG && window.STX_CONFIG.REGISTRATION_OPEN !== false);
+
+        if (!isOpen) {
             showRegistrationClosed();
             return;
         }

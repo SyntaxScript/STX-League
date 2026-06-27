@@ -220,6 +220,52 @@
         });
     }
 
+    function bindRegToggle() {
+        var toggle = $('regToggle');
+        var hint = $('regStatusHint');
+        if (!toggle) return;
+
+        function refresh() {
+            if (!window.STX_SETTINGS || !window.STX_SETTINGS.isLoaded()) return;
+            var open = window.STX_SETTINGS.get('registration_open') === true;
+            toggle.checked = open;
+            if (hint) {
+                hint.textContent = open ? tr('admin.settings.reg.open') : tr('admin.settings.reg.closed');
+                hint.style.color = open ? 'var(--grn)' : 'var(--mut)';
+            }
+        }
+
+        // Загрузить настройки → обновить тумблер
+        if (window.STX_SETTINGS) {
+            window.STX_SETTINGS.onReady(refresh);
+        }
+        document.addEventListener('stx:settings', refresh);
+        document.addEventListener('stx:lang', refresh);
+
+        toggle.addEventListener('change', function() {
+            var newValue = toggle.checked;
+            toggle.disabled = true;
+            if (hint) hint.textContent = '...';
+
+            window.STX_SETTINGS.set('registration_open', newValue).then(function(res) {
+                toggle.disabled = false;
+                if (res.error) {
+                    alert(tr('admin.settings.save_err') + ' ' + res.error.message);
+                    toggle.checked = !newValue; // откатить
+                    refresh();
+                    return;
+                }
+                // Маленький фидбек
+                if (hint) {
+                    var orig = hint.textContent;
+                    hint.textContent = tr('admin.settings.saved');
+                    hint.style.color = 'var(--grn)';
+                    setTimeout(refresh, 1500);
+                }
+            });
+        });
+    }
+
     function onAuth(user, isAdm) {
         currentUser = user;
         isAdmin = !!isAdm;
@@ -231,6 +277,7 @@
         } else {
             showState('admin');
             loadTeams();
+            bindRegToggle();
         }
     }
 
