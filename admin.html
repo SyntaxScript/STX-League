@@ -1,56 +1,92 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="О турнире STX League MD — киберспортивный турнир по CS2 в Молдове.">
-    <meta name="theme-color" content="#0a0a0f">
-    <title>О турнире — STX League MD</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%230a0a0f'/><text x='16' y='22' text-anchor='middle' font-size='18' font-weight='bold' fill='%23a855f7' font-family='sans-serif'>S</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+/* ===== Публичная сетка команд (teams.html) =====
+   Берёт approved-команды из Supabase. RLS разрешает SELECT всем (даже без логина).
+*/
+(function() {
+    'use strict';
 
-<div id="nav-host"></div>
+    var MAX = (window.STX_CONFIG && window.STX_CONFIG.MAX_TEAMS) || 16;
 
-<section id="about" style="padding-top:140px">
-    <div class="container">
-        <div class="sec-tag" data-i18n="about.tag">О турнире</div>
-        <h2 class="sec-title" data-i18n="about.title">STX LEAGUE MD</h2>
-        <p class="sec-sub" data-i18n="about.sub">Киберспортивный турнир по Counter-Strike 2 в Молдове от Syntax League. Собери свою команду, докажи что ты лучший и сразись за звание чемпиона.</p>
-        <div class="about-grid">
-            <div class="about-card">
-                <div class="ico"><svg viewBox="0 0 44 44" fill="none"><rect x="5" y="7" width="34" height="32" rx="5" stroke="#a855f7" stroke-width="2.2"/><path d="M5 17h34" stroke="#a855f7" stroke-width="2.2"/><line x1="15" y1="3" x2="15" y2="11" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round"/><line x1="29" y1="3" x2="29" y2="11" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round"/></svg></div>
-                <h3 data-i18n="about.card1.title">Дата и время</h3>
-                <p data-i18n="about.card1.text">15 Августа 2026<br>Старт в 10:00</p>
-            </div>
-            <div class="about-card">
-                <div class="ico"><svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="13" r="4.5" stroke="#a855f7" stroke-width="2.2"/><path d="M11 35c0-6.075 4.925-11 11-11s11 4.925 11 11" stroke="#a855f7" stroke-width="2.2" stroke-linecap="round"/></svg></div>
-                <h3 data-i18n="about.card2.title">Команды</h3>
-                <p data-i18n="about.card2.text">16 команд<br>5v5 • Single Elimination</p>
-            </div>
-            <div class="about-card">
-                <div class="ico"><svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="18" stroke="#a855f7" stroke-width="2.2"/><circle cx="22" cy="22" r="10" stroke="#a855f7" stroke-width="1.6"/></svg></div>
-                <h3 data-i18n="about.card3.title">Призовой фонд</h3>
-                <p data-i18n="about.card3.text">2 500 MDL<br>+ приз MVP турнира</p>
-            </div>
-        </div>
-        <div style="text-align:center;margin-top:50px">
-            <a href="register.html" class="btn-primary" data-i18n="hero.btn.register">Зарегистрировать команду</a>
-        </div>
-    </div>
-</section>
+    function escapeHtml(s) {
+        if (s == null) return '';
+        return String(s).replace(/[&<>"']/g, function(c) {
+            return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+        });
+    }
+    function tr(k) { return (window.I18N && window.I18N.t) ? window.I18N.t(k) : k; }
 
-<div id="footer-host"></div>
+    var lastTeams = null;
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="js/config.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/supabase-client.js"></script>
-<script src="js/settings.js"></script>
-<script src="js/common.js"></script>
-</body>
-</html>
+    function load() {
+        var grid = document.getElementById('tgrid');
+        if (!grid) return;
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--mut)">' + tr('teams.loading') + '</div>';
+
+        function tryLoad() {
+            if (!window.STX || !window.STX.client) {
+                setTimeout(tryLoad, 150);
+                return;
+            }
+            window.STX.client
+                .from('teams_with_players')
+                .select('id, team_name, team_tag, players')
+                .eq('status', 'approved')
+                .order('submitted_at', { ascending: true })
+                .then(render);
+        }
+        tryLoad();
+    }
+
+    function render(res) {
+        var grid = document.getElementById('tgrid');
+        if (!grid) return;
+
+        if (res.error) {
+            console.error('Load teams error:', res.error);
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:30px;color:var(--red)">' + tr('teams.error') + '</div>';
+            return;
+        }
+
+        var teams = res.data || [];
+        lastTeams = teams;
+        var count = Math.min(teams.length, MAX);
+
+        var tcnt = document.getElementById('tcnt');
+        if (tcnt) tcnt.textContent = count;
+        var pbar = document.getElementById('pbar');
+        if (pbar) pbar.style.width = (count / MAX * 100) + '%';
+
+        grid.innerHTML = '';
+        for (var i = 0; i < MAX; i++) {
+            var card = document.createElement('div');
+            if (i < teams.length) {
+                var t = teams[i];
+                card.className = 'team-card filled';
+                var av = escapeHtml((t.team_tag || t.team_name.substring(0, 2)).toUpperCase());
+                var nicks = (t.players || [])
+                    .filter(function(p) { return !p.is_sub; })
+                    .map(function(p) { return escapeHtml(p.nickname); })
+                    .join(' • ');
+                card.innerHTML = '<div class="team-av">' + av + '</div>' +
+                    '<div class="team-name">' + escapeHtml(t.team_name) + '</div>' +
+                    '<div class="team-players">' + (nicks || '—') + '</div>';
+            } else {
+                card.className = 'team-card empty';
+                card.innerHTML = '<div class="team-av">?</div>' +
+                    '<div class="team-name">' + tr('teams.empty.name') + '</div>' +
+                    '<div class="team-players">' + tr('teams.empty.text') + '</div>';
+            }
+            grid.appendChild(card);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', load);
+    } else {
+        load();
+    }
+
+    // Перерисовать пустые слоты при смене языка
+    document.addEventListener('stx:lang', function() {
+        if (lastTeams) render({ data: lastTeams });
+    });
+})();
