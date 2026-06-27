@@ -1436,6 +1436,151 @@ footer .copy { color: var(--mut); font-size: 11px; }
     cursor: pointer;
 }
 
+/* REG-CLOSED MODAL — красивая модалка "Регистрация закрыта" */
+.reg-closed-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 99997;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility .25s ease;
+    padding: 20px;
+}
+.reg-closed-modal.on {
+    opacity: 1;
+    visibility: visible;
+}
+.reg-closed-box {
+    background: linear-gradient(180deg, var(--card) 0%, var(--bg2) 100%);
+    border: 1px solid var(--bor2);
+    border-radius: var(--rad2);
+    padding: 40px 36px 32px;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .6), 0 0 60px rgba(245, 158, 11, .12);
+    transform: scale(.92) translateY(20px);
+    transition: transform .35s cubic-bezier(.22, 1, .36, 1);
+    position: relative;
+    overflow: hidden;
+}
+.reg-closed-modal.on .reg-closed-box {
+    transform: scale(1) translateY(0);
+}
+/* Декоративная подсветка вверху */
+.reg-closed-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    width: 200px; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: translateX(-50%);
+}
+.reg-closed-icon {
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 18px;
+    background: radial-gradient(circle, rgba(245, 158, 11, .25) 0%, rgba(245, 158, 11, .05) 70%);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    box-shadow: 0 0 30px rgba(245, 158, 11, .3);
+    animation: regLockPulse 2.5s ease-in-out infinite;
+}
+@keyframes regLockPulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(245, 158, 11, .3); }
+    50%      { box-shadow: 0 0 50px rgba(245, 158, 11, .5); }
+}
+.reg-closed-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(24px, 4vw, 32px);
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+.reg-closed-hint {
+    color: var(--txt2);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 26px;
+}
+.reg-closed-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.reg-closed-btn-discord,
+.reg-closed-btn-tg {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .25s;
+    border: none;
+    text-decoration: none;
+}
+.reg-closed-btn-discord {
+    background: #5865F2;
+    color: #fff;
+}
+.reg-closed-btn-discord:hover {
+    background: #4752c4;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(88, 101, 242, .35);
+}
+.reg-closed-btn-tg {
+    background: #26A5E4;
+    color: #fff;
+}
+.reg-closed-btn-tg:hover {
+    background: #1d91cc;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(38, 165, 228, .35);
+}
+.reg-closed-btn-close {
+    background: transparent;
+    color: var(--mut);
+    border: 1px solid var(--bor2);
+    padding: 11px 18px;
+    border-radius: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: .25s;
+}
+.reg-closed-btn-close:hover {
+    border-color: var(--txt);
+    color: var(--txt);
+}
+@media (max-width: 480px) {
+    .reg-closed-box { padding: 32px 22px 24px; }
+    .reg-closed-actions { flex-direction: column; }
+    .reg-closed-btn-discord,
+    .reg-closed-btn-tg,
+    .reg-closed-btn-close { width: 100%; justify-content: center; }
+}
+
 /* DETAILS MODAL (большая модалка с инфой о команде) */
 .details-modal-box {
     max-width: 720px !important;
