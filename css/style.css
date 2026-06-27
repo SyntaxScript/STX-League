@@ -1436,6 +1436,19 @@ footer .copy { color: var(--mut); font-size: 11px; }
     cursor: pointer;
 }
 
+/* TOGGLE SWITCH */
+.toggle-switch input:checked + .toggle-slider {
+    background: var(--ac) !important;
+    box-shadow: 0 0 15px rgba(124, 58, 237, .4);
+}
+.toggle-switch input:checked + .toggle-slider .toggle-knob {
+    transform: translateX(32px);
+}
+.toggle-switch input:disabled + .toggle-slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /* DELETE CONFIRM MODAL */
 .del-modal {
     position: fixed;
