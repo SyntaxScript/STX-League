@@ -2,7 +2,7 @@
 
 # 🎮 STX League MD
 
-### Первый киберспортивный турнир по Counter-Strike 2 в Молдове
+### Киберспортивный турнир по Counter-Strike 2 в Молдове
 
 [![Сайт](https://img.shields.io/badge/🌐_Сайт-stxleague.xyz-7c3aed?style=for-the-badge)](https://stxleague.xyz)
 [![Discord](https://img.shields.io/badge/Discord-присоединиться-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/stxleague)
