@@ -16,52 +16,249 @@
 
 <div id="nav-host"></div>
 
-<section id="register" class="alt" style="padding-top:140px">
-    <div class="container">
-        <div class="sec-tag" data-i18n="reg.tag">Регистрация</div>
-        <h2 class="sec-title" data-i18n="reg.title">Зарегистрировать команду</h2>
-        <p class="sec-sub" data-i18n="reg.sub">Взнос: 200 MDL с команды • 16 слотов</p>
-        <div class="form-wrapper">
-            <div class="reg-steps" id="rsteps">
-                <div class="rstep cur" id="rs1"><div class="rstep-num">1</div><div class="rstep-lbl" data-i18n="reg.step1">Команда</div></div>
-                <div class="rstep" id="rs2"><div class="rstep-num">2</div><div class="rstep-lbl" data-i18n="reg.step2">Игроки</div></div>
-                <div class="rstep" id="rs3"><div class="rstep-num">3</div><div class="rstep-lbl" data-i18n="reg.step3">Подтверждение</div></div>
+<section id="register" class="reg-section">
+    <div class="reg-container">
+
+        <!-- HEADER -->
+        <div class="reg-header">
+            <div class="reg-tag" data-i18n="reg.tag">Регистрация</div>
+            <h1 class="reg-title" data-i18n="reg.title">Зарегистрировать команду</h1>
+            <p class="reg-sub" data-i18n="reg.sub">Взнос: 200 MDL с команды • 16 слотов</p>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="reg-progress-wrap" id="progressWrap">
+            <div class="reg-progress-info">
+                <span class="reg-progress-step">
+                    <span data-i18n="reg.progress.step">Шаг</span>
+                    <span id="currentStep">1</span> / 3
+                </span>
+                <span class="reg-progress-percent" id="progressPercent">33%</span>
             </div>
-            <div class="form-card" id="fcard">
-                <div id="authMsg" class="auth-msg">
-                    <svg viewBox="0 0 24 24" width="44" height="44" style="fill:#5865F2;margin-bottom:12px"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                    <p data-i18n="reg.auth.title" style="font-family:'Oswald',sans-serif;font-size:17px;letter-spacing:1px">Войдите через Discord</p>
-                    <p class="hint" data-i18n="reg.auth.hint">Для регистрации команды необходима авторизация</p>
-                    <button class="btn-primary" id="authLoginBtn" type="button" data-i18n="reg.auth.btn" style="font-size:14px;padding:12px 28px">Войти через Discord</button>
+            <div class="reg-progress-bar">
+                <div class="reg-progress-fill" id="progressFill"></div>
+            </div>
+            <div class="reg-progress-labels">
+                <div class="reg-progress-lbl active" data-step="1">
+                    <div class="reg-progress-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <span data-i18n="reg.step1">Команда</span>
                 </div>
-                <form id="regForm" novalidate style="display:none">
-                    <div class="form-step on" id="step1">
-                        <div class="form-row">
-                            <div class="form-group"><label data-i18n="reg.f.name">Название команды</label><input type="text" id="teamName" data-i18n-placeholder="reg.f.name.ph" placeholder="Night Wolves" required><div class="err" id="teamNameErr" data-i18n="reg.f.name.err">Введите название</div></div>
-                            <div class="form-group"><label data-i18n="reg.f.tag">Тег (2-5 символов)</label><input type="text" id="teamTag" data-i18n-placeholder="reg.f.tag.ph" placeholder="NW" minlength="2" maxlength="5"><div class="err" id="teamTagErr" data-i18n="reg.f.tag.err">2-5 символов</div></div>
+                <div class="reg-progress-lbl" data-step="2">
+                    <div class="reg-progress-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+                    </div>
+                    <span data-i18n="reg.step2">Игроки</span>
+                </div>
+                <div class="reg-progress-lbl" data-step="3">
+                    <div class="reg-progress-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                    </div>
+                    <span data-i18n="reg.step3">Подтверждение</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAIN CARD -->
+        <div class="reg-card" id="regCard">
+
+            <!-- AUTH BLOCK -->
+            <div class="reg-auth" id="authMsg">
+                <div class="reg-auth-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                </div>
+                <h3 data-i18n="reg.auth.title">Войдите через Discord</h3>
+                <p data-i18n="reg.auth.hint">Для регистрации команды необходима авторизация через Discord</p>
+                <button class="reg-btn-discord" id="authLoginBtn" type="button">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                    <span data-i18n="reg.auth.btn">Войти через Discord</span>
+                </button>
+            </div>
+
+            <!-- REGISTRATION FORM -->
+            <form id="regForm" class="reg-form" novalidate style="display:none">
+
+                <!-- USER INFO (после логина) -->
+                <div class="reg-user-info" id="userInfo">
+                    <img class="reg-user-avatar" id="userAvatar" src="" alt="">
+                    <div class="reg-user-details">
+                        <div class="reg-user-label" data-i18n="reg.logged_as">Вы вошли как</div>
+                        <div class="reg-user-name" id="userName">Player</div>
+                    </div>
+                    <div class="reg-user-status">
+                        <span class="reg-user-dot"></span>
+                        <span data-i18n="nav.online">В сети</span>
+                    </div>
+                </div>
+
+                <!-- STEP 1: TEAM INFO -->
+                <div class="reg-step active" id="step1" data-step="1">
+                    <div class="reg-step-header">
+                        <div class="reg-step-icon">🎮</div>
+                        <div>
+                            <h2 class="reg-step-title" data-i18n="reg.s1.title">Информация о команде</h2>
+                            <p class="reg-step-sub" data-i18n="reg.s1.sub">Основные данные о твоей команде</p>
                         </div>
-                        <div class="form-group"><label data-i18n="reg.f.logo">Логотип (необязательно)</label><div class="file-up"><input type="file" id="teamLogo" accept="image/png,image/jpeg,image/jpg,image/webp"><div class="file-up-label" data-i18n="reg.f.logo.btn">📁 Загрузить логотип</div></div><div class="err" id="teamLogoErr" style="margin-top:6px"></div></div>
-                        <div class="form-group"><label data-i18n="reg.f.contact">Контакт капитана (Telegram)</label><input type="text" id="captainContact" data-i18n-placeholder="reg.f.contact.ph" placeholder="@username" required><div class="err" id="captainContactErr" data-i18n="reg.f.contact.err">Укажите Telegram</div></div>
-                        <div class="form-nav"><div></div><button type="button" class="btn-primary" id="goStep2" data-i18n="reg.btn.next">Далее</button></div>
                     </div>
-                    <div class="form-step" id="step2">
-                        <div id="playersBox"></div>
-                        <div class="sub-row"><div class="sub-num">S</div><div class="pfields"><input type="text" id="subNick" data-i18n-placeholder="reg.sub.ph.nick" placeholder="Никнейм запасного"><input type="text" id="subSteam" data-i18n-placeholder="reg.sub.ph.steam" placeholder="Steam ID / Ссылка (необязательно)"></div></div>
-                        <div class="form-nav"><button type="button" class="btn-back" id="backStep1" data-i18n="reg.btn.back">Назад</button><button type="button" class="btn-primary" id="goStep3" data-i18n="reg.btn.next">Далее</button></div>
-                    </div>
-                    <div class="form-step" id="step3">
-                        <div style="background:var(--bg2);border-radius:var(--rad);padding:20px;margin-bottom:16px;border:1px solid var(--bor)">
-                            <h4 data-i18n="reg.review.title" style="font-family:'Oswald',sans-serif;letter-spacing:1px;margin-bottom:12px;color:var(--ac2)">Проверьте данные</h4>
-                            <div id="review" style="font-size:13px;color:var(--txt2);line-height:2.1"></div>
+
+                    <div class="reg-fields-grid reg-fields-grid-2">
+                        <div class="reg-field">
+                            <label class="reg-label" data-i18n="reg.f.name">Название команды</label>
+                            <input type="text" class="reg-input" id="teamName" data-i18n-placeholder="reg.f.name.ph" placeholder="Night Wolves" maxlength="40" required>
+                            <div class="reg-hint" data-i18n="reg.f.name.hint">От 2 до 40 символов</div>
+                            <div class="reg-error" id="teamNameErr" data-i18n="reg.f.name.err">Введите название</div>
                         </div>
-                        <div class="form-group"><div class="chk-group"><input type="checkbox" id="rulesAgree" required><label for="rulesAgree"><span data-i18n="reg.agree">Согласен с</span> <a href="rules.html" style="color:var(--ac2)" data-i18n="reg.agree.link">правилами турнира</a></label></div><div class="err" id="rulesAgreeErr" data-i18n="reg.agree.err" style="margin-top:3px">Необходимо согласиться</div></div>
-                        <div class="form-nav"><button type="button" class="btn-back" id="backStep2" data-i18n="reg.btn.back">Назад</button><button type="submit" class="btn-primary" id="submitForm" data-i18n="reg.btn.submit">Отправить заявку</button></div>
+
+                        <div class="reg-field">
+                            <label class="reg-label" data-i18n="reg.f.tag">Тег команды</label>
+                            <input type="text" class="reg-input" id="teamTag" data-i18n-placeholder="reg.f.tag.ph" placeholder="NW" minlength="2" maxlength="5">
+                            <div class="reg-hint" data-i18n="reg.f.tag.hint">2-5 символов, необязательно</div>
+                            <div class="reg-error" id="teamTagErr" data-i18n="reg.f.tag.err">2-5 символов</div>
+                        </div>
                     </div>
-                </form>
-                <div class="form-ok" id="formOk">
-                    <div class="ok-icon"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 16l8 8L27 8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-                    <h3 data-i18n="reg.ok.title">Заявка отправлена!</h3>
-                    <p data-i18n="reg.ok.text">Мы свяжемся с капитаном в Telegram для подтверждения.<br>Реквизиты для оплаты взноса (200 MDL) — после подтверждения.</p>
+
+                    <!-- LOGO UPLOAD -->
+                    <div class="reg-field">
+                        <label class="reg-label" data-i18n="reg.f.logo">Логотип команды</label>
+                        <div class="reg-logo-upload" id="logoUpload">
+                            <input type="file" id="teamLogo" accept="image/png,image/jpeg,image/jpg,image/webp" hidden>
+                            <div class="reg-logo-preview" id="logoPreview">
+                                <div class="reg-logo-placeholder">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                </div>
+                            </div>
+                            <div class="reg-logo-content">
+                                <div class="reg-logo-title" data-i18n="reg.f.logo.title">Перетащи файл сюда</div>
+                                <div class="reg-logo-sub" data-i18n="reg.f.logo.sub">или нажми для выбора • PNG, JPG, WebP • до 5 MB</div>
+                                <button type="button" class="reg-logo-btn" id="logoBrowseBtn" data-i18n="reg.f.logo.browse">Выбрать файл</button>
+                                <button type="button" class="reg-logo-remove" id="logoRemoveBtn" data-i18n="reg.f.logo.remove" style="display:none">✕ Убрать</button>
+                            </div>
+                        </div>
+                        <div class="reg-error" id="teamLogoErr"></div>
+                    </div>
+
+                    <div class="reg-field">
+                        <label class="reg-label" data-i18n="reg.f.contact">Telegram капитана</label>
+                        <div class="reg-input-wrap">
+                            <div class="reg-input-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.66-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.26-1.47-.4-1.41-.85.03-.23.34-.47 1.01-.72 3.94-1.72 6.56-2.85 7.87-3.39 3.73-1.55 4.5-1.82 5.01-1.83z"/></svg>
+                            </div>
+                            <input type="text" class="reg-input reg-input-with-icon" id="captainContact" data-i18n-placeholder="reg.f.contact.ph" placeholder="@username" required>
+                        </div>
+                        <div class="reg-hint" data-i18n="reg.f.contact.hint">Через этот контакт мы свяжемся с капитаном</div>
+                        <div class="reg-error" id="captainContactErr" data-i18n="reg.f.contact.err">Укажите Telegram</div>
+                    </div>
+
+                    <div class="reg-nav">
+                        <div></div>
+                        <button type="button" class="reg-btn reg-btn-primary" id="goStep2">
+                            <span data-i18n="reg.btn.next">Далее</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 2: PLAYERS -->
+                <div class="reg-step" id="step2" data-step="2">
+                    <div class="reg-step-header">
+                        <div class="reg-step-icon">👥</div>
+                        <div>
+                            <h2 class="reg-step-title" data-i18n="reg.s2.title">Состав команды</h2>
+                            <p class="reg-step-sub" data-i18n="reg.s2.sub">5 основных игроков + запасной (по желанию)</p>
+                        </div>
+                    </div>
+
+                    <!-- MAIN PLAYERS -->
+                    <div class="reg-section-title">
+                        <span data-i18n="reg.s2.main">Основной состав</span>
+                        <span class="reg-badge reg-badge-required" data-i18n="reg.s2.required">Обязательно</span>
+                    </div>
+                    <div class="reg-players-list" id="playersBox"></div>
+
+                    <!-- SUB PLAYER -->
+                    <div class="reg-section-title" style="margin-top:24px">
+                        <span data-i18n="reg.s2.sub_title">Запасной игрок</span>
+                        <span class="reg-badge reg-badge-optional" data-i18n="reg.s2.optional">Необязательно</span>
+                    </div>
+                    <div class="reg-player-card reg-player-card-sub">
+                        <div class="reg-player-num">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
+                        </div>
+                        <div class="reg-player-fields">
+                            <input type="text" class="reg-input" id="subNick" data-i18n-placeholder="reg.sub.ph.nick" placeholder="Никнейм запасного" maxlength="30">
+                            <input type="text" class="reg-input" id="subSteam" data-i18n-placeholder="reg.sub.ph.steam" placeholder="Steam ID / Ссылка (необязательно)" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="reg-nav">
+                        <button type="button" class="reg-btn reg-btn-back" id="backStep1">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                            <span data-i18n="reg.btn.back">Назад</span>
+                        </button>
+                        <button type="button" class="reg-btn reg-btn-primary" id="goStep3">
+                            <span data-i18n="reg.btn.next">Далее</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: REVIEW -->
+                <div class="reg-step" id="step3" data-step="3">
+                    <div class="reg-step-header">
+                        <div class="reg-step-icon">✅</div>
+                        <div>
+                            <h2 class="reg-step-title" data-i18n="reg.s3.title">Подтверждение заявки</h2>
+                            <p class="reg-step-sub" data-i18n="reg.s3.sub">Проверьте данные перед отправкой</p>
+                        </div>
+                    </div>
+
+                    <div class="reg-review" id="review"></div>
+
+                    <div class="reg-agreement">
+                        <label class="reg-checkbox">
+                            <input type="checkbox" id="rulesAgree" required>
+                            <span class="reg-checkbox-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                            </span>
+                            <span class="reg-checkbox-text">
+                                <span data-i18n="reg.agree">Согласен с</span>
+                                <a href="rules.html" target="_blank" data-i18n="reg.agree.link">правилами турнира</a>
+                            </span>
+                        </label>
+                        <div class="reg-error" id="rulesAgreeErr" data-i18n="reg.agree.err">Необходимо согласиться</div>
+                    </div>
+
+                    <div class="reg-nav">
+                        <button type="button" class="reg-btn reg-btn-back" id="backStep2">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+                            <span data-i18n="reg.btn.back">Назад</span>
+                        </button>
+                        <button type="submit" class="reg-btn reg-btn-submit" id="submitForm">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                            <span data-i18n="reg.btn.submit">Отправить заявку</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- SUCCESS SCREEN -->
+            <div class="reg-success" id="formOk">
+                <div class="reg-success-icon">
+                    <svg viewBox="0 0 52 52">
+                        <circle class="reg-success-circle" cx="26" cy="26" r="25" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path class="reg-success-check" d="M14.1 27.2l7.1 7.2 16.7-16.8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2 class="reg-success-title" data-i18n="reg.ok.title">Заявка отправлена!</h2>
+                <p class="reg-success-text" data-i18n="reg.ok.text">Мы свяжемся с капитаном в Telegram для подтверждения.<br>Реквизиты для оплаты взноса (200 MDL) — после подтверждения.</p>
+                <div class="reg-success-actions">
+                    <a href="index.html" class="reg-btn reg-btn-back">
+                        <span data-i18n="reg.ok.home">На главную</span>
+                    </a>
+                    <a href="teams.html" class="reg-btn reg-btn-primary">
+                        <span data-i18n="reg.ok.teams">Все команды</span>
+                    </a>
                 </div>
             </div>
         </div>
