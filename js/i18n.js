@@ -268,6 +268,15 @@
             'foot.copy':    '&copy; 2026 Syntax League. Все права защищены.',
             'foot.admin':   'Панель администратора',
 
+            // ===== Welcome Modal =====
+            'welcome.badge':   'CS2 • МОЛДОВА 2026',
+            'welcome.title':   'Добро пожаловать в STX League!',
+            'welcome.text':    'Присоединяйся к нашему сообществу — будь в курсе новостей турнира, находи тиммейтов и следи за матчами в прямом эфире.',
+            'welcome.discord.sub': 'Общение и матчи',
+            'welcome.tg.sub':      'Анонсы и новости',
+            'welcome.tt.sub':      'Трансляции матчей',
+            'welcome.skip':    'Пропустить',
+
             // ===== Easter egg =====
             'egg.text':     'Ты нашёл секретный код! Твоя команда автоматически в финале. Шутка 😄<br>Удачи на турнире, легенда!',
             'egg.close':    'Закрыть',
@@ -542,6 +551,15 @@
             'foot.contact': 'stxleague@gmail.com &nbsp;|&nbsp; @stxleague',
             'foot.copy':    '&copy; 2026 Syntax League. Toate drepturile rezervate.',
             'foot.admin':   'Panou administrator',
+
+            // ===== Welcome Modal =====
+            'welcome.badge':   'CS2 • MOLDOVA 2026',
+            'welcome.title':   'Bine ai venit la STX League!',
+            'welcome.text':    'Alătură-te comunității noastre — fii la curent cu noutățile turneului, găsește coechipieri și urmărește meciurile în direct.',
+            'welcome.discord.sub': 'Comunicare și meciuri',
+            'welcome.tg.sub':      'Anunțuri și știri',
+            'welcome.tt.sub':      'Transmisiuni ale meciurilor',
+            'welcome.skip':    'Omite',
 
             // ===== Easter egg =====
             'egg.text':     'Ai găsit codul secret! Echipa ta este automat în finală. Glumă 😄<br>Succes la turneu, legendă!',
