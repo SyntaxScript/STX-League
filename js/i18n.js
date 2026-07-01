@@ -145,6 +145,31 @@
             'reg.err.full':      'Все 16 слотов уже заняты.',
             'reg.err.discord':   'Не удалось получить Discord ID. Попробуйте перелогиниться.',
             'reg.err.generic':   'Ошибка отправки:',
+            'reg.progress.step':    'Шаг',
+            'reg.logged_as':        'Вы вошли как',
+            'reg.s1.title':         'Информация о команде',
+            'reg.s1.sub':           'Основные данные о твоей команде',
+            'reg.f.name.hint':      'От 2 до 40 символов',
+            'reg.f.tag.hint':       '2-5 символов, необязательно',
+            'reg.f.contact.hint':   'Через этот контакт мы свяжемся с капитаном',
+            'reg.f.logo.title':     'Перетащи файл сюда',
+            'reg.f.logo.sub':       'или нажми для выбора • PNG, JPG, WebP • до 5 MB',
+            'reg.f.logo.browse':    'Выбрать файл',
+            'reg.f.logo.remove':    '✕ Убрать',
+            'reg.s2.title':         'Состав команды',
+            'reg.s2.sub':           '5 основных игроков + запасной (по желанию)',
+            'reg.s2.main':          'Основной состав',
+            'reg.s2.required':      'Обязательно',
+            'reg.s2.sub_title':     'Запасной игрок',
+            'reg.s2.optional':      'Необязательно',
+            'reg.s3.title':         'Подтверждение заявки',
+            'reg.s3.sub':           'Проверьте данные перед отправкой',
+            'reg.review.team_info': 'Команда',
+            'reg.review.discord_account': 'Discord',
+            'reg.review.players':   'Игроки',
+            'reg.review.no_steam':  'Steam не указан',
+            'reg.ok.home':          'На главную',
+            'reg.ok.teams':         'Все команды',
 
             // ===== Rules =====
             'rules.tag':       'Правила',
@@ -204,50 +229,106 @@
             'admin.no_admin.title': 'Доступ запрещён',
             'admin.no_admin.text':  'Ваш Discord-аккаунт не имеет прав администратора.<br>Если это ошибка — обратитесь к организаторам.',
             'admin.no_admin.btn':   'Выйти',
-            'admin.refresh':  '↻ Обновить',
+            'admin.refresh':  'Обновить',
+
+            // Sidebar navigation
+            'admin.nav.dashboard':  'Обзор',
+            'admin.nav.teams':      'Команды',
+            'admin.nav.settings':   'Настройки',
+            'admin.sidebar.role':   'Администратор',
+
+            // Dashboard
+            'admin.dashboard.title': 'Обзор',
+            'admin.dashboard.sub':   'Статистика и последние заявки',
+            'admin.chart.timeline':  'Заявки по дням',
+            'admin.chart.status':    'Распределение статусов',
+            'admin.chart.last14':    'За последние 14 дней',
+            'admin.chart.empty':     'Нет данных',
+            'admin.chart.applications': 'заявок',
+            'admin.recent.title':    'Последние заявки',
+            'admin.recent.all':      'Все команды',
+
+            // Teams
+            'admin.teams.title':     'Команды',
+            'admin.teams.sub':       'Управление заявками',
+            'admin.teams.search':    'Поиск по названию или капитану...',
+            'admin.teams.export':    'Экспорт CSV',
+            'admin.filter.all':      'Все',
+            'admin.view.grid':       'Карточки',
+            'admin.view.list':       'Таблица',
+            'admin.export.empty':    'Нет данных для экспорта',
+            'admin.empty.search':    'Ничего не найдено',
+
+            // Time ago
+            'admin.time.now':        'только что',
+            'admin.time.min':        'мин',
+            'admin.time.hour':       'ч',
+            'admin.time.day':        'дн',
+
+            // Stats
             'admin.s.total':  'Всего',
             'admin.s.pending': 'Ожидает',
             'admin.s.approved': 'Одобрено',
             'admin.s.rejected': 'Отклонено',
+
+            // Table columns
             'admin.col.team':    'Команда',
             'admin.col.captain': 'Капитан',
             'admin.col.discord': 'Discord',
             'admin.col.date':    'Дата',
             'admin.col.status':  'Статус',
             'admin.col.actions': 'Действия',
+
+            // Empty & buttons
             'admin.empty':    'Нет заявок',
             'admin.btn.approve': 'Одобрить',
             'admin.btn.reject':  'Отклонить',
             'admin.btn.players': 'Игроки',
             'admin.btn.delete':  'Удалить',
+
+            // Status labels
             'admin.st.pending':  'Ожидает',
             'admin.st.approved': 'Одобрено',
             'admin.st.rejected': 'Отклонено',
-            'admin.del.title':   '⚠️ Удаление команды',
+
+            // Delete modal
+            'admin.del.title':   'Удаление команды',
             'admin.del.text':    'Вы уверены, что хотите удалить эту заявку?',
             'admin.del.warn':    'Это действие нельзя отменить!',
             'admin.del.cancel':  'Отмена',
             'admin.del.confirm': 'Удалить',
-            'admin.reject.reason': 'Причина отклонения (опционально):',
+
+            // Reject modal
+            'admin.reject.title':       'Отклонение заявки',
+            'admin.reject.hint':        'Укажите причину отклонения (опционально):',
+            'admin.reject.placeholder': 'Причина отклонения...',
+            'admin.reject.reason':      'Причина отклонения (опционально):',
+
+            // Modal general
             'admin.modal.close':  'Закрыть',
             'admin.err.load':    'Ошибка загрузки заявок:',
             'admin.err.action':  'Ошибка:',
-            'admin.settings.title': '⚙️ Настройки сайта',
+
+            // Settings
+            'admin.settings.title': 'Настройки',
+            'admin.settings.sub':   'Управление параметрами сайта',
             'admin.settings.reg.label': 'Регистрация команд',
-            'admin.settings.reg.hint': 'Откройте, когда захотите начать приём заявок',
+            'admin.settings.reg.hint':  'Откройте, когда захотите начать приём заявок',
             'admin.settings.reg.open':  'Регистрация открыта — игроки могут подавать заявки',
             'admin.settings.reg.closed': 'Регистрация закрыта — на странице показывается заглушка',
-            'admin.settings.saved': '✅ Сохранено',
-            'admin.settings.save_err': 'Ошибка сохранения:',
+            'admin.settings.saved':     '✅ Сохранено',
+            'admin.settings.save_err':  'Ошибка сохранения:',
+
             // Details modal
             'admin.details.logo.title':   'Логотип',
             'admin.details.logo.none':    'Логотип не загружен',
             'admin.details.logo.broken':  '⚠️ Логотип не загружается',
             'admin.details.logo.open':    'Открыть в новой вкладке',
+            'admin.details.logo.download': 'Скачать',
             'admin.details.captain.title': 'Капитан',
-            'admin.details.captain.discord': 'Discord:',
-            'admin.details.captain.discord_id': 'Discord ID:',
-            'admin.details.captain.contact':    'Контакт:',
+            'admin.details.captain.discord': 'Discord',
+            'admin.details.captain.discord_id': 'Discord ID',
+            'admin.details.captain.contact':    'Контакт',
             'admin.details.players.title': 'Состав',
             'admin.details.no_players':   'Нет игроков',
             'admin.details.sub':          'ЗАПАСНОЙ',
@@ -428,6 +509,31 @@
             'reg.err.full':      'Toate cele 16 locuri sunt ocupate.',
             'reg.err.discord':   'Nu s-a putut obține Discord ID. Încercați să vă reconectați.',
             'reg.err.generic':   'Eroare la trimitere:',
+            'reg.progress.step':    'Pas',
+            'reg.logged_as':        'Ești conectat ca',
+            'reg.s1.title':         'Informații despre echipă',
+            'reg.s1.sub':           'Date de bază despre echipa ta',
+            'reg.f.name.hint':      'De la 2 la 40 caractere',
+            'reg.f.tag.hint':       '2-5 caractere, opțional',
+            'reg.f.contact.hint':   'Prin acest contact vom comunica cu căpitanul',
+            'reg.f.logo.title':     'Trage fișierul aici',
+            'reg.f.logo.sub':       'sau apasă pentru a selecta • PNG, JPG, WebP • până la 5 MB',
+            'reg.f.logo.browse':    'Alege fișier',
+            'reg.f.logo.remove':    '✕ Elimină',
+            'reg.s2.title':         'Componența echipei',
+            'reg.s2.sub':           '5 jucători principali + rezervă (opțional)',
+            'reg.s2.main':          'Lot principal',
+            'reg.s2.required':      'Obligatoriu',
+            'reg.s2.sub_title':     'Jucător de rezervă',
+            'reg.s2.optional':      'Opțional',
+            'reg.s3.title':         'Confirmarea cererii',
+            'reg.s3.sub':           'Verifică datele înainte de trimitere',
+            'reg.review.team_info': 'Echipă',
+            'reg.review.discord_account': 'Discord',
+            'reg.review.players':   'Jucători',
+            'reg.review.no_steam':  'Steam nu este indicat',
+            'reg.ok.home':          'Acasă',
+            'reg.ok.teams':         'Toate echipele',
 
             // ===== Rules =====
             'rules.tag':       'Reguli',
@@ -488,50 +594,106 @@
             'admin.no_admin.title': 'Acces interzis',
             'admin.no_admin.text':  'Contul tău Discord nu are drepturi de administrator.<br>Dacă este o eroare — contactați organizatorii.',
             'admin.no_admin.btn':   'Ieșire',
-            'admin.refresh':  '↻ Reîmprospătare',
+            'admin.refresh':  'Reîmprospătare',
+
+            // Sidebar navigation
+            'admin.nav.dashboard':  'Prezentare',
+            'admin.nav.teams':      'Echipe',
+            'admin.nav.settings':   'Setări',
+            'admin.sidebar.role':   'Administrator',
+
+            // Dashboard
+            'admin.dashboard.title': 'Prezentare generală',
+            'admin.dashboard.sub':   'Statistici și cereri recente',
+            'admin.chart.timeline':  'Cereri pe zile',
+            'admin.chart.status':    'Distribuția statusurilor',
+            'admin.chart.last14':    'Ultimele 14 zile',
+            'admin.chart.empty':     'Nu există date',
+            'admin.chart.applications': 'cereri',
+            'admin.recent.title':    'Cereri recente',
+            'admin.recent.all':      'Toate echipele',
+
+            // Teams
+            'admin.teams.title':     'Echipe',
+            'admin.teams.sub':       'Gestionarea cererilor',
+            'admin.teams.search':    'Caută după nume sau căpitan...',
+            'admin.teams.export':    'Export CSV',
+            'admin.filter.all':      'Toate',
+            'admin.view.grid':       'Carduri',
+            'admin.view.list':       'Tabel',
+            'admin.export.empty':    'Nu există date pentru export',
+            'admin.empty.search':    'Nu s-a găsit nimic',
+
+            // Time ago
+            'admin.time.now':        'chiar acum',
+            'admin.time.min':        'min',
+            'admin.time.hour':       'h',
+            'admin.time.day':        'z',
+
+            // Stats
             'admin.s.total':  'Total',
             'admin.s.pending': 'În așteptare',
             'admin.s.approved': 'Aprobate',
             'admin.s.rejected': 'Respinse',
+
+            // Table columns
             'admin.col.team':    'Echipă',
             'admin.col.captain': 'Căpitan',
             'admin.col.discord': 'Discord',
             'admin.col.date':    'Data',
             'admin.col.status':  'Status',
             'admin.col.actions': 'Acțiuni',
+
+            // Empty & buttons
             'admin.empty':    'Nu există cereri',
             'admin.btn.approve': 'Aprobă',
             'admin.btn.reject':  'Respinge',
             'admin.btn.players': 'Jucători',
             'admin.btn.delete':  'Șterge',
+
+            // Status labels
             'admin.st.pending':  'În așteptare',
             'admin.st.approved': 'Aprobată',
             'admin.st.rejected': 'Respinsă',
-            'admin.del.title':   '⚠️ Ștergerea echipei',
+
+            // Delete modal
+            'admin.del.title':   'Ștergerea echipei',
             'admin.del.text':    'Sigur doriți să ștergeți această cerere?',
             'admin.del.warn':    'Această acțiune nu poate fi anulată!',
             'admin.del.cancel':  'Anulează',
             'admin.del.confirm': 'Șterge',
-            'admin.reject.reason': 'Motivul respingerii (opțional):',
+
+            // Reject modal
+            'admin.reject.title':       'Respingerea cererii',
+            'admin.reject.hint':        'Indică motivul respingerii (opțional):',
+            'admin.reject.placeholder': 'Motivul respingerii...',
+            'admin.reject.reason':      'Motivul respingerii (opțional):',
+
+            // Modal general
             'admin.modal.close':  'Închide',
             'admin.err.load':    'Eroare la încărcarea cererilor:',
             'admin.err.action':  'Eroare:',
-            'admin.settings.title': '⚙️ Setări site',
+
+            // Settings
+            'admin.settings.title': 'Setări',
+            'admin.settings.sub':   'Gestionarea parametrilor site-ului',
             'admin.settings.reg.label': 'Înregistrarea echipelor',
-            'admin.settings.reg.hint': 'Activează când vrei să începi primirea cererilor',
+            'admin.settings.reg.hint':  'Activează când vrei să începi primirea cererilor',
             'admin.settings.reg.open':  'Înregistrarea este deschisă — jucătorii pot trimite cereri',
             'admin.settings.reg.closed': 'Înregistrarea este închisă — pe pagină se afișează mesaj',
-            'admin.settings.saved': '✅ Salvat',
-            'admin.settings.save_err': 'Eroare la salvare:',
+            'admin.settings.saved':     '✅ Salvat',
+            'admin.settings.save_err':  'Eroare la salvare:',
+
             // Details modal
             'admin.details.logo.title':   'Logo',
             'admin.details.logo.none':    'Logo nu a fost încărcat',
             'admin.details.logo.broken':  '⚠️ Logo nu se încarcă',
             'admin.details.logo.open':    'Deschide în filă nouă',
+            'admin.details.logo.download': 'Descarcă',
             'admin.details.captain.title': 'Căpitan',
-            'admin.details.captain.discord': 'Discord:',
-            'admin.details.captain.discord_id': 'Discord ID:',
-            'admin.details.captain.contact':    'Contact:',
+            'admin.details.captain.discord': 'Discord',
+            'admin.details.captain.discord_id': 'Discord ID',
+            'admin.details.captain.contact':    'Contact',
             'admin.details.players.title': 'Componența',
             'admin.details.no_players':   'Nu sunt jucători',
             'admin.details.sub':          'REZERVĂ',
