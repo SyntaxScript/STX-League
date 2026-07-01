@@ -415,6 +415,115 @@
         }
     }
 
+// ===== ПРИВЕТСТВЕННОЕ МОДАЛЬНОЕ ОКНО =====
+function showWelcomeModal() {
+    // Проверяем, показывали ли уже
+    if (localStorage.getItem('stx_welcome_shown') === '1') return;
+
+    var cfg = window.STX_CONFIG || {};
+    var discordUrl = cfg.DISCORD_URL || 'https://discord.gg/f5bZJFWW2B';
+    var tgUrl      = cfg.TELEGRAM_URL || 'https://t.me/stxleague';
+    var ttUrl      = cfg.TIKTOK_URL || 'https://tiktok.com/@stxleague';
+
+    // SVG иконки (вынесены в переменные для читаемости)
+    var TG_ICON = '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.66-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.26-1.47-.4-1.41-.85.03-.23.34-.47 1.01-.72 3.94-1.72 6.56-2.85 7.87-3.39 3.73-1.55 4.5-1.82 5.01-1.83z"/></svg>';
+    var TT_ICON = '<svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>';
+    var ARROW_ICON = '<svg class="welcome-btn-arrow" viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l5 5-5 5"/></svg>';
+    var CLOSE_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>';
+
+    // Создаём модалку
+    var m = document.createElement('div');
+    m.id = 'welcomeModal';
+    m.className = 'welcome-modal';
+    m.setAttribute('role', 'dialog');
+    m.setAttribute('aria-modal', 'true');
+    m.innerHTML =
+        '<div class="welcome-box">' +
+            '<button class="welcome-close-x" id="welcomeCloseX" data-i18n-aria-label="admin.modal.close">' + CLOSE_ICON + '</button>' +
+            '<div class="welcome-logo">STX LEAGUE</div>' +
+            '<div class="welcome-badge" data-i18n="welcome.badge"></div>' +
+            '<h2 class="welcome-title" data-i18n="welcome.title"></h2>' +
+            '<p class="welcome-text" data-i18n="welcome.text"></p>' +
+            '<div class="welcome-socials">' +
+                '<a href="' + discordUrl + '" target="_blank" rel="noopener" class="welcome-btn welcome-btn-discord">' +
+                    DISCORD_ICON +
+                    '<div class="welcome-btn-text">' +
+                        '<span class="welcome-btn-title">Discord</span>' +
+                        '<span class="welcome-btn-sub" data-i18n="welcome.discord.sub"></span>' +
+                    '</div>' +
+                    ARROW_ICON +
+                '</a>' +
+                '<a href="' + tgUrl + '" target="_blank" rel="noopener" class="welcome-btn welcome-btn-tg">' +
+                    TG_ICON +
+                    '<div class="welcome-btn-text">' +
+                        '<span class="welcome-btn-title">Telegram</span>' +
+                        '<span class="welcome-btn-sub" data-i18n="welcome.tg.sub"></span>' +
+                    '</div>' +
+                    ARROW_ICON +
+                '</a>' +
+                '<a href="' + ttUrl + '" target="_blank" rel="noopener" class="welcome-btn welcome-btn-tt">' +
+                    TT_ICON +
+                    '<div class="welcome-btn-text">' +
+                        '<span class="welcome-btn-title">TikTok</span>' +
+                        '<span class="welcome-btn-sub" data-i18n="welcome.tt.sub"></span>' +
+                    '</div>' +
+                    ARROW_ICON +
+                '</a>' +
+            '</div>' +
+            '<button class="welcome-skip" id="welcomeSkip" data-i18n="welcome.skip"></button>' +
+        '</div>';
+
+    document.body.appendChild(m);
+
+    // Применить переводы сразу
+    if (window.I18N) window.I18N.applyToDOM(m);
+
+    // Блокировка скролла body
+    var scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + scrollY + 'px';
+    document.body.style.width = '100%';
+
+// Даём браузеру время отрисовать элемент, потом запускаем анимацию
+setTimeout(function() {
+    m.classList.add('on');
+}, 50);
+
+    // Функция закрытия
+    var isClosing = false;
+    function closeModal() {
+        if (isClosing) return;
+        isClosing = true;
+
+        m.classList.remove('on');
+        localStorage.setItem('stx_welcome_shown', '1');
+
+        // Восстановить скролл
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, scrollY);
+
+        // Удалить после анимации
+        setTimeout(function() {
+            if (m && m.parentNode) m.parentNode.removeChild(m);
+            document.removeEventListener('keydown', escHandler);
+        }, 500);
+    }
+
+    // Обработчики
+    document.getElementById('welcomeCloseX').addEventListener('click', closeModal);
+    document.getElementById('welcomeSkip').addEventListener('click', closeModal);
+    m.addEventListener('click', function(e) {
+        if (e.target === m) closeModal();
+    });
+
+    var escHandler = function(e) {
+        if (e.key === 'Escape') closeModal();
+    };
+    document.addEventListener('keydown', escHandler);
+}
+
     // ===== INIT =====
     function init() {
         injectPreloader();
@@ -454,6 +563,13 @@
             setTimeout(hidePreloader, 1200);
         });
         setTimeout(hidePreloader, 4000);
+    }
+
+    // Показать приветственное окно только на главной странице
+    if (getCurrentPage() === 'index.html') {
+        window.addEventListener('load', function() {
+            setTimeout(showWelcomeModal, 1800); // после прелоадера
+        });
     }
 
     if (document.readyState === 'loading') {
