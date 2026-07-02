@@ -282,33 +282,135 @@
         });
     }
 
-    // ===== Sound + Konami =====
-    function bindExtras() {
-        var soundOn = true;
-        var sndBtn = document.getElementById('sndBtn');
-        if (sndBtn) {
-            sndBtn.addEventListener('click', function() {
-                soundOn = !soundOn;
-                sndBtn.textContent = soundOn ? '🔊' : '🔇';
-            });
-        }
-        var konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','KeyB','KeyA'];
-        var ki = 0;
-        document.addEventListener('keydown', function(e) {
-            if (e.code === konami[ki]) {
-                ki++;
-                if (ki === konami.length) {
-                    var egg = document.getElementById('egg');
-                    if (egg) egg.classList.add('on');
-                    ki = 0;
-                }
-            } else { ki = 0; }
-        });
-        var eggClose = document.getElementById('eggClose');
-        var egg = document.getElementById('egg');
-        if (eggClose) eggClose.addEventListener('click', function() { egg.classList.remove('on'); });
-        if (egg) egg.addEventListener('click', function(e) { if (e.target === egg) egg.classList.remove('on'); });
+// ===== Sound + Konami =====
+var STX_SOUND = {
+    enabled: true,
+    audio: null,
+    initialized: false
+};
+
+function initSound() {
+    if (STX_SOUND.initialized) return;
+
+    // Загружаем состояние из localStorage
+    var saved = localStorage.getItem('stx_sound_enabled');
+    STX_SOUND.enabled = saved !== '0'; // по умолчанию включён
+
+    // Создаём аудио-элемент
+    // ⚠️ Если файл называется иначе — поменяй путь ниже
+    STX_SOUND.audio = new Audio('sounds/click.mp3');
+    STX_SOUND.audio.volume = 0.3;
+    STX_SOUND.audio.preload = 'auto';
+
+    // Пул из 5 аудио-элементов для быстрых кликов (без лагов)
+    STX_SOUND.pool = [];
+    for (var i = 0; i < 5; i++) {
+        var a = new Audio('sounds/click.mp3');
+        a.volume = 0.3;
+        a.preload = 'auto';
+        STX_SOUND.pool.push(a);
     }
+    STX_SOUND.poolIndex = 0;
+
+    STX_SOUND.initialized = true;
+}
+
+function playClickSound() {
+    if (!STX_SOUND.enabled || !STX_SOUND.initialized) return;
+    try {
+        // Берём следующий аудио из пула
+        var audio = STX_SOUND.pool[STX_SOUND.poolIndex];
+        STX_SOUND.poolIndex = (STX_SOUND.poolIndex + 1) % STX_SOUND.pool.length;
+        audio.currentTime = 0;
+        audio.play().catch(function() {}); // игнорируем ошибки автоплея
+    } catch (e) {}
+}
+
+function bindGlobalClickSounds() {
+    // Селекторы элементов, на которые вешаем звук
+    var CLICKABLE = [
+        'button',
+        '.btn-primary',
+        '.btn-secondary',
+        '.btn-discord',
+        '.btn-reg',
+        '.btn-back',
+        '.reg-btn',
+        '.reg-btn-primary',
+        '.reg-btn-back',
+        '.reg-btn-submit',
+        '.reg-btn-discord',
+        '.reg-logo-btn',
+        '.reg-logo-remove',
+        '.admin-btn',
+        '.admin-nav-item',
+        '.admin-filter',
+        '.admin-view-btn',
+        '.lang-btn',
+        '.acc-head',
+        '.file-up-label',
+        '.reg-checkbox',
+        '.welcome-btn',
+        '.welcome-skip',
+        '.welcome-close-x',
+        '.reg-closed-btn-discord',
+        '.reg-closed-btn-tg',
+        '.reg-closed-btn-close',
+        '.egg-close',
+        '.abtn-sm',
+        '.snd',
+        '.btt',
+        '.burger'
+    ];
+
+    document.addEventListener('click', function(e) {
+        for (var i = 0; i < CLICKABLE.length; i++) {
+            if (e.target.closest(CLICKABLE[i])) {
+                playClickSound();
+                return;
+            }
+        }
+    }, true); // capture phase — работает раньше других
+}
+
+function bindExtras() {
+    // === Sound ===
+    initSound();
+    bindGlobalClickSounds();
+
+    var sndBtn = document.getElementById('sndBtn');
+    if (sndBtn) {
+        // Ставим правильную иконку при загрузке
+        sndBtn.textContent = STX_SOUND.enabled ? '🔊' : '🔇';
+
+        sndBtn.addEventListener('click', function() {
+            STX_SOUND.enabled = !STX_SOUND.enabled;
+            sndBtn.textContent = STX_SOUND.enabled ? '🔊' : '🔇';
+            localStorage.setItem('stx_sound_enabled', STX_SOUND.enabled ? '1' : '0');
+
+            // Проиграть звук при включении (обратная связь)
+            if (STX_SOUND.enabled) playClickSound();
+        });
+    }
+
+    // === Konami code ===
+    var konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','KeyB','KeyA'];
+    var ki = 0;
+    document.addEventListener('keydown', function(e) {
+        if (e.code === konami[ki]) {
+            ki++;
+            if (ki === konami.length) {
+                var egg = document.getElementById('egg');
+                if (egg) egg.classList.add('on');
+                ki = 0;
+            }
+        } else { ki = 0; }
+    });
+    var eggClose = document.getElementById('eggClose');
+    var egg = document.getElementById('egg');
+    if (eggClose) eggClose.addEventListener('click', function() { egg.classList.remove('on'); });
+    if (egg) egg.addEventListener('click', function(e) { if (e.target === egg) egg.classList.remove('on'); });
+}
 
     // ===== Красивая модалка "Регистрация закрыта" =====
     function showRegClosedModal() {
