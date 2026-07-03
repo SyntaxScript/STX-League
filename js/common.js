@@ -145,7 +145,6 @@
                 '<div class="contact" data-i18n="foot.contact">' + t('foot.contact') + '</div>' +
                 '<div class="copy" data-i18n="foot.copy">' + t('foot.copy') + '</div>' +
             '</footer>' +
-            '<button class="snd" id="sndBtn" data-i18n-title="common.sound" title="' + t('common.sound') + '">🔊</button>' +
             '<button class="btt" id="btt" data-i18n-title="common.btt" title="' + t('common.btt') + '">&uarr;</button>' +
             '<div class="egg" id="egg">' +
                 '<div class="egg-box">' +
@@ -374,7 +373,6 @@ function bindGlobalClickSounds() {
         '.reg-closed-btn-close',
         '.egg-close',
         '.abtn-sm',
-        '.snd',
         '.btt',
         '.burger'
     ];
@@ -393,21 +391,6 @@ function bindExtras() {
     // === Sound ===
     initSound();
     bindGlobalClickSounds();
-
-    var sndBtn = document.getElementById('sndBtn');
-    if (sndBtn) {
-        // Ставим правильную иконку при загрузке
-        sndBtn.textContent = STX_SOUND.enabled ? '🔊' : '🔇';
-
-        sndBtn.addEventListener('click', function() {
-            STX_SOUND.enabled = !STX_SOUND.enabled;
-            sndBtn.textContent = STX_SOUND.enabled ? '🔊' : '🔇';
-            localStorage.setItem('stx_sound_enabled', STX_SOUND.enabled ? '1' : '0');
-
-            // Проиграть звук при включении (обратная связь)
-            if (STX_SOUND.enabled) playClickSound();
-        });
-    }
 
     // === Konami code ===
     var konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','KeyB','KeyA'];
