@@ -20,12 +20,55 @@
     --rad2: 20px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+body {
+    overflow-x: hidden;
+}
+
+html.smooth-scroll-enabled {
+    scroll-behavior: smooth;
+}
+
+body.smooth-scroll-enabled {
+    scroll-behavior: smooth;
+}
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--txt);
     line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color .35s ease, color .35s ease;
+}
+a, button, input, select, textarea, img, svg,
+.card, .about-card, .partner-card, .prize-card, .team-card,
+.schedule-item, .faq-item, .acc-item, .btn-primary, .btn-secondary,
+section, .sec-title, .sec-sub, .about-grid, .prize-grid, .team-grid,
+.about-card, .prize-card, .team-card, .schedule-item, .faq-item, .partner-card {
+    transition: transform .35s cubic-bezier(.2, .8, .2, 1),
+                background-color .35s ease,
+                color .35s ease,
+                border-color .35s ease,
+                box-shadow .35s ease,
+                opacity .35s ease,
+                filter .35s ease;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s cubic-bezier(.2, .8, .2, 1), transform .7s cubic-bezier(.2, .8, .2, 1);
+}
+
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; }
@@ -554,7 +597,7 @@ nav.scrolled {
 
 /* SECTIONS */
 section { padding: 90px 20px; }
-section.alt { background: var(--bg2); }
+section.alt { background: none; }
 .container { max-width: 1200px; margin: 0 auto; }
 .sec-tag {
     font-family: 'Oswald', sans-serif;
@@ -1328,10 +1371,17 @@ section.alt { background: var(--bg2); }
 
 /* FOOTER */
 footer {
-    background: var(--bg2);
+    background: #09090f;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-top: 1px solid var(--bor);
     padding: 40px 20px;
     text-align: center;
+    margin-top: auto;
+    position: relative;
+    z-index: 3;
+    isolation: isolate;
+    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.35);
 }
 .flogo {
     font-family: 'Bebas Neue', sans-serif;
@@ -1447,20 +1497,20 @@ footer .copy { color: var(--mut); font-size: 11px; }
     cursor: pointer;
 }
 
-/* REG-CLOSED MODAL — красивая модалка "Регистрация закрыта" */
+/* REG-CLOSED MODAL — современная модалка "Регистрация закрыта" */
 .reg-closed-modal {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, .75);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(3, 4, 10, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 99997;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity .25s ease, visibility .25s ease;
+    transition: opacity .28s ease, visibility .28s ease;
     padding: 20px;
 }
 .reg-closed-modal.on {
@@ -1468,128 +1518,155 @@ footer .copy { color: var(--mut); font-size: 11px; }
     visibility: visible;
 }
 .reg-closed-box {
-    background: linear-gradient(180deg, var(--card) 0%, var(--bg2) 100%);
-    border: 1px solid var(--bor2);
-    border-radius: var(--rad2);
-    padding: 40px 36px 32px;
-    max-width: 440px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, .6), 0 0 60px rgba(245, 158, 11, .12);
-    transform: scale(.92) translateY(20px);
-    transition: transform .35s cubic-bezier(.22, 1, .36, 1);
     position: relative;
+    width: min(100%, 460px);
+    background: linear-gradient(145deg, rgba(18, 18, 30, 0.98), rgba(10, 10, 15, 0.98));
+    border: 1px solid rgba(168, 85, 247, 0.22);
+    border-radius: 24px;
+    padding: 36px 28px 28px;
+    text-align: center;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 0 70px rgba(124, 58, 237, 0.12);
+    transform: translateY(18px) scale(0.96);
+    transition: transform .35s cubic-bezier(.22, 1, .36, 1), opacity .35s ease;
     overflow: hidden;
 }
 .reg-closed-modal.on .reg-closed-box {
-    transform: scale(1) translateY(0);
+    transform: translateY(0) scale(1);
 }
-/* Декоративная подсветка вверху */
 .reg-closed-box::before {
     content: '';
     position: absolute;
-    top: 0; left: 50%;
-    width: 200px; height: 3px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    inset: 0;
+    background: radial-gradient(circle at top, rgba(168, 85, 247, 0.11), transparent 55%);
+    pointer-events: none;
+}
+.reg-closed-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 220px;
+    height: 3px;
     transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 .reg-closed-icon {
-    width: 84px;
-    height: 84px;
-    margin: 0 auto 18px;
-    background: radial-gradient(circle, rgba(245, 158, 11, .25) 0%, rgba(245, 158, 11, .05) 70%);
-    border: 2px solid var(--gold);
+    position: relative;
+    width: 86px;
+    height: 86px;
+    margin: 0 auto 16px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     color: var(--gold);
-    box-shadow: 0 0 30px rgba(245, 158, 11, .3);
-    animation: regLockPulse 2.5s ease-in-out infinite;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    box-shadow: 0 0 32px rgba(245, 158, 11, 0.18);
+    animation: regLockPulse 2.6s ease-in-out infinite;
+}
+.reg-closed-icon svg {
+    width: 42px;
+    height: 42px;
 }
 @keyframes regLockPulse {
-    0%, 100% { box-shadow: 0 0 30px rgba(245, 158, 11, .3); }
-    50%      { box-shadow: 0 0 50px rgba(245, 158, 11, .5); }
+    0%, 100% { box-shadow: 0 0 24px rgba(245, 158, 11, 0.18); transform: scale(1); }
+    50% { box-shadow: 0 0 38px rgba(245, 158, 11, 0.28); transform: scale(1.03); }
 }
 .reg-closed-title {
+    position: relative;
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(24px, 4vw, 32px);
-    color: var(--gold);
-    letter-spacing: 2px;
-    margin-bottom: 12px;
+    letter-spacing: 1.6px;
+    color: #fff;
+    margin-bottom: 10px;
     line-height: 1.15;
 }
 .reg-closed-hint {
-    color: var(--txt2);
+    position: relative;
+    color: rgba(255, 255, 255, 0.72);
     font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 26px;
+    line-height: 1.7;
+    margin: 0 auto 22px;
+    max-width: 360px;
 }
 .reg-closed-actions {
+    position: relative;
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
 }
 .reg-closed-btn-discord,
-.reg-closed-btn-tg {
+.reg-closed-btn-tg,
+.reg-closed-btn-close {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
-    padding: 11px 18px;
-    border-radius: 8px;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 11px 16px;
     font-family: 'Oswald', sans-serif;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: .5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     cursor: pointer;
-    transition: .25s;
-    border: none;
+    transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease, border-color .25s ease, color .25s ease;
     text-decoration: none;
 }
 .reg-closed-btn-discord {
-    background: #5865F2;
+    background: rgba(88, 101, 242, 0.14);
     color: #fff;
+    border: 1px solid rgba(88, 101, 242, 0.32);
 }
 .reg-closed-btn-discord:hover {
-    background: #4752c4;
+    background: #5865F2;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(88, 101, 242, .35);
+    box-shadow: 0 8px 20px rgba(88, 101, 242, 0.28);
 }
 .reg-closed-btn-tg {
-    background: #26A5E4;
+    background: rgba(38, 165, 228, 0.14);
     color: #fff;
+    border: 1px solid rgba(38, 165, 228, 0.32);
 }
 .reg-closed-btn-tg:hover {
-    background: #1d91cc;
+    background: #26A5E4;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(38, 165, 228, .35);
+    box-shadow: 0 8px 20px rgba(38, 165, 228, 0.28);
 }
 .reg-closed-btn-close {
     background: transparent;
-    color: var(--mut);
-    border: 1px solid var(--bor2);
-    padding: 11px 18px;
-    border-radius: 8px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: .5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: .25s;
+    color: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.12);
 }
 .reg-closed-btn-close:hover {
-    border-color: var(--txt);
-    color: var(--txt);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-2px);
 }
 @media (max-width: 480px) {
-    .reg-closed-box { padding: 32px 22px 24px; }
-    .reg-closed-actions { flex-direction: column; }
+    .reg-closed-box {
+        padding: 32px 20px 24px;
+        border-radius: 20px;
+    }
+    .reg-closed-actions {
+        flex-direction: column;
+    }
     .reg-closed-btn-discord,
     .reg-closed-btn-tg,
-    .reg-closed-btn-close { width: 100%; justify-content: center; }
+    .reg-closed-btn-close {
+        width: 100%;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .reg-closed-modal,
+    .reg-closed-box,
+    .reg-closed-btn-discord,
+    .reg-closed-btn-tg,
+    .reg-closed-btn-close {
+        transition-duration: .15s !important;
+        animation-duration: .15s !important;
+    }
 }
 
 /* DETAILS MODAL (большая модалка с инфой о команде) */
@@ -1995,7 +2072,7 @@ footer .copy { color: var(--mut); font-size: 11px; }
     min-height: 100vh;
     background:
         radial-gradient(ellipse at top, rgba(124, 58, 237, .08), transparent 60%),
-        var(--bg);
+        rgba(10, 10, 15, 0.7);
 }
 
 .reg-container {
@@ -4959,3 +5036,8 @@ footer .copy { color: var(--mut); font-size: 11px; }
     }
 }
 
+body.admin-body footer { display: none; }
+section, footer, .page-hero, .reg-section, .admin-panel, .admin-state {
+    position: relative;
+    z-index: 1;
+}
