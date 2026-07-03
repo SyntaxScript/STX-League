@@ -19,7 +19,7 @@
         { href: 'teams.html',    key: 'nav.teams' },
         { href: 'rules.html',    key: 'nav.rules' },
         { href: 'faq.html',      key: 'nav.faq' },
-        { href: 'partners.html', key: 'nav.partners' }
+        { href: 'help.html', key: 'nav.partners' }
     ];
 
     function t(k, fb) {
@@ -42,7 +42,7 @@
         if (document.getElementById('preloader')) return;
         var p = document.createElement('div');
         p.id = 'preloader';
-        p.innerHTML = '<div class="pload">STX</div><div class="pring"></div><div class="pload-text">Загрузка...</div>';
+        p.innerHTML = '<div class="pload">STX</div><div class="pring"></div><div class="pload-text" data-i18n="common.loading">' + t('common.loading', 'Loading...') + '</div>';
         document.body.insertBefore(p, document.body.firstChild);
     }
     function hidePreloader() {
@@ -307,22 +307,26 @@ var STX_SOUND = {
 function initSound() {
     if (STX_SOUND.initialized) return;
 
-    // Загружаем состояние из localStorage
+    // Сбрасываем старое отключение звука и включаем его по умолчанию
     var saved = localStorage.getItem('stx_sound_enabled');
-    STX_SOUND.enabled = saved !== '0'; // по умолчанию включён
+    STX_SOUND.enabled = saved !== '0';
+    if (saved === '0') {
+        localStorage.removeItem('stx_sound_enabled');
+    }
 
     // Создаём аудио-элемент
-    // ⚠️ Если файл называется иначе — поменяй путь ниже
     STX_SOUND.audio = new Audio('sounds/click.mp3');
-    STX_SOUND.audio.volume = 0.3;
+    STX_SOUND.audio.volume = 0.85;
     STX_SOUND.audio.preload = 'auto';
+    STX_SOUND.audio.muted = false;
 
     // Пул из 5 аудио-элементов для быстрых кликов (без лагов)
     STX_SOUND.pool = [];
     for (var i = 0; i < 5; i++) {
         var a = new Audio('sounds/click.mp3');
-        a.volume = 0.3;
+        a.volume = 0.85;
         a.preload = 'auto';
+        a.muted = false;
         STX_SOUND.pool.push(a);
     }
     STX_SOUND.poolIndex = 0;
@@ -337,7 +341,9 @@ function playClickSound() {
         var audio = STX_SOUND.pool[STX_SOUND.poolIndex];
         STX_SOUND.poolIndex = (STX_SOUND.poolIndex + 1) % STX_SOUND.pool.length;
         audio.currentTime = 0;
-        audio.play().catch(function() {}); // игнорируем ошибки автоплея
+        audio.muted = false;
+        audio.volume = 0.85;
+        audio.play().catch(function() {});
     } catch (e) {}
 }
 
@@ -643,7 +649,7 @@ setTimeout(function() {
         bindLangSwitch();
         initRevealAnimations();
 
-        // Применить i18n ко всем data-i18n атрибутам (включая только что вставленные шапку/футер)
+        // Применить i18n ко всем data-i18n атрибутам (включая только что вставленные шапку/футер и прелоадер)
         if (window.I18N) window.I18N.applyToDOM();
         applyRegistrationStatus();
 
