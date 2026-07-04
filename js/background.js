@@ -58,8 +58,8 @@
     /* Обновление позиции частицы */
     Particle.prototype.update = function() {
         this.wobble += this.wobbleSpeed;
-        var driftX = Math.sin(this.wobble) * 0.5;
-        var driftY = Math.cos(this.wobble * 1.35) * 0.4;
+        var driftX = Math.sin(this.wobble) * 0.45;
+        var driftY = Math.cos(this.wobble * 1.35) * 0.3;
 
         this.x += this.vx + driftX;
         this.y += this.vy + driftY;

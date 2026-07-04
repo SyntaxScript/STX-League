@@ -1632,7 +1632,22 @@ footer {
 .fsocial a:hover { border-color: var(--ac2); transform: translateY(-2px); }
 .fsocial a:hover svg { fill: var(--ac2); }
 footer .contact { color: var(--mut); font-size: 12px; margin-bottom: 6px; }
-footer .copy { color: var(--mut); font-size: 11px; }
+footer .copy { color: var(--mut); font-size: 11px; margin-bottom: 10px; }
+footer .policy-links {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+footer .privacy-link {
+    color: var(--txt2);
+    text-decoration: underline;
+    transition: .3s;
+    font-size: 11px;
+}
+footer .privacy-link:hover {
+    color: var(--ac2);
+}
 .fadmin {
     display: inline-block;
     margin-top: 10px;
