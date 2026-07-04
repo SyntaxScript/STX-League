@@ -4,7 +4,7 @@
 
 ### Киберспортивный турнир по Counter-Strike 2 в Молдове
 
-[![Сайт](https://img.shields.io/badge/🌐_Сайт-stxleague.xyz-7c3aed?style=for-the-badge)](https://stxleague.xyz)
+[![Сайт](https://img.shields.io/badge/🌐_Сайт-stxleague.xyz-7c3aed?style=for-the-badge)](https://www.stxleague.xyz)
 [![Discord](https://img.shields.io/badge/Discord-присоединиться-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/f5bZJFWW2B)
 [![Telegram](https://img.shields.io/badge/Telegram-@stxleague-26A5E4?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/stxleague)
 
